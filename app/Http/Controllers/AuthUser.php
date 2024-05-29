@@ -16,22 +16,29 @@ class AuthUser extends Controller
             "username"=> ["required"],
             "password"=> ["required"]
         ]);
-        $user = User_info::where("username", $data["username"])->where("password", md5($data['password']))->first();
-        if($user){
-          if($user->usertype==='staff'){
-            $request->session()->put('usertype', $user->usertype);
-            $request->session()->put('userid', $user->id);
-            return redirect()->route('staff')->with('success','welcome staff');
-          }else if($user->usertype=== 'admin'){
-            $request->session()->put('usertype', $user->usertype);
-            $request->session()->put('userid', $user->id);
-            return redirect()->route('admin')->with('success','welcome admin');
-          }else if($user->usertype=== 'cms'){
-
-          }
+        if(auth()->attempt($data)){
+            $request->session()->regenerate();
+            if(auth()->user()->usertype == "staff"){
+                return redirect()->route('staff')->with('success','welcome staff');
+            }else if(auth()->user()->usertype == 'admin'){
+                return redirect()->route('admin')->with('success','welcome admin');
+            }
         }else{
             return back()->with('invalid','Invalid Credentials!');
         }
-
     }
+    public function admin(){
+        return view('pages.admin')->with('success','Welcome Admin');
+    }
+    public function staff(){
+        return view('pages.staff')->with('success','Welcome Staff');
+    }
+
+    public function signoutAction(Request $request){
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return view('login')->with('success','Logout Success');
+    }
+
 }

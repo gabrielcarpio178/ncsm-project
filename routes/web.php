@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AuthUser::class, 'index']);
+Route::controller(AdminController::class)->group(function () {
+    Route::get("/settings", "settings")->name("settings");
+    Route::put("/settings/{id}","update")->name("update");
+});
 
-Route::post('/loginAction', [AuthUser::class,'loginAction'])->name('loginAction');
-Route::get('/staff', function(){
-    return view('pages.staff');
-})->name('staff');
-Route::get('/admin', function(){
-    return view('pages.admin');
-})->name('admin');
+Route::controller(AuthUser::class)->group(function(){
+    Route::get('/', 'index')->name('login');
+    Route::post('/loginAction','loginAction')->name('loginAction');
+    Route::get('/staff','staff')->name('staff')->middleware('auth');
+    Route::get('/admin','admin')->name('admin')->middleware('auth');
+    Route::get('/signoutAction', 'signoutAction')->name('signoutAction');
+});
