@@ -16,6 +16,7 @@ class AuthUser extends Controller
             "username"=> ["required"],
             "password"=> ["required"]
         ]);
+
         if(auth()->attempt($data)){
             $request->session()->regenerate();
             if(auth()->user()->usertype == "staff"){
@@ -38,7 +39,7 @@ class AuthUser extends Controller
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return view('login')->with('success','Logout Success');
+        return redirect('/')->with('logout','Logout Success');
     }
 
 }

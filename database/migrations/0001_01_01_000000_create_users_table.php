@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('username');
             $table->string('password');
+            $table->string('decrypt');
             $table->string('usertype');
             $table->timestamps();
         });

@@ -14,6 +14,7 @@ class User_info extends Model
         "lname",
         "email",
         "username",
-        "password"
+        "password",
+        "decrypt"
     ];
 }

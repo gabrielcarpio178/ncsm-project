@@ -9,4 +9,4 @@
   <script src="//unpkg.com/alpinejs" defer></script>
   <title>{{$title}}</title>
 </head>
-<body>
+<body class="bg-green-100">
