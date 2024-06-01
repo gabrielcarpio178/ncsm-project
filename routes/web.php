@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AdminController::class)->group(function () {
     Route::get("/settings", "settings")->name("settings");
     Route::put("/settings/{id}","update")->name("update");
+    Route::get("/register-student", 'register_student')->name('register_admin');
+    Route::post('/search','search')->name('search');
+    Route::get('/student_profile/{id}','student_profile')->name('student_profile');
 });
 
 Route::controller(AuthUser::class)->group(function(){
@@ -17,10 +20,6 @@ Route::controller(AuthUser::class)->group(function(){
     Route::get('/admin','admin')->name('admin')->middleware('auth');
     Route::post('/signoutAction', 'signoutAction')->name('signoutAction');
 });
-
-// Route::controller(Students::class)->group(function(){
-
-// });
 
 Route::get("/register",function () {
     return view("students.register");

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->unsignedInteger('student_id')->autoIncrement();
+            $table->id();
             $table->string('course');
             $table->string('fname');
             $table->string('mname');
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('civil_status');
             $table->string('employment');
+            $table->boolean('status')->default(0);
             $table->date('birthdate');
             $table->string('birthplace');
             $table->timestamps();
@@ -40,5 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('students');
+
     }
 };

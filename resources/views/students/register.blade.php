@@ -1,3 +1,4 @@
+<x-alertmessage></x-alertmessage>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Registration form</title>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    @vite('resources/css/app.css')
+    <link rel="icon" type="image/x-icon" href="/images/nolitc.png">
     <style>
         *{
     margin: 0;
@@ -1137,8 +1141,8 @@ input[type=readio]{
         <h5 class="suff">(e.g Jr., Sr., III, if any)</h5>
     </div>
 
-    <input class="lastname" type="text" placeholder="Lastname" name="fname" required>
-    <input class="firstname" type="text" placeholder="Firstname" name="lname" required>
+    <input class="lastname" type="text" placeholder="Lastname" name="lname" required>
+    <input class="firstname" type="text" placeholder="Firstname" name="fname" required>
     <input class="middlename" type="text" placeholder="Middlename" name="mname" required>
     <input class="suf" type="text" placeholder="Suffix" name="sname">
 
@@ -1164,7 +1168,7 @@ input[type=readio]{
     <h5 class="contact">Contact Number</h5>
     <h5 class="ber">Contact Number</h5>
 
-    <input class="number" type="text" placeholder="Number, Street" name="student_numberStreet">
+    <input class="number" type="text" placeholder="Number, Street" name="student_numberStreet" required>
 
     <select id="region" name="region" class="reg" disabled>
         <option value="western visayas" selected>VI</option>
@@ -1174,7 +1178,7 @@ input[type=readio]{
       <option value="Negros Occidental" selected>Negros Occidental</option>
     </select>
 
-    <select id="muni" name="muni" class="muni">
+    <select id="muni" name="muni" class="muni" required>
       <option value="" selected disabled>Select City/Municapility</option>
       <option value="Bago City">Bago City</option> <option value="Binalbagan">Binalbagan</option>
       <option value="Candoni">Candoni</option> <option value="Cauayan">Cauayan</option>
@@ -1194,14 +1198,14 @@ input[type=readio]{
     </select>
 
     <select id="dist" name="dist" class="dist">
-      <option value="none" selected>Select District</option>
+      <option value="none" selected id="selected_zip">Select District</option>
     </select>
 
-    <select id="Zip" name="zip" class="Zip" >
-      <option value="none" selected>Zip Code</option>
+    <select  name="zip" class="Zip" >
+      <option value="none" id="Zip" selected>Zip Code</option>
     </select>
 
-    <select id="country" name="country" class="country">
+    <select id="country" name="country" class="country" required>
       <option value="" disabled selected>Select Nationality</option>
       <option value="Chinese">Chinese</option> <option value="">Japanese</option>
       <option value="Korean">Korean</option> <option value="">Indian</option>
@@ -1209,26 +1213,26 @@ input[type=readio]{
       <option value="Filipino">Filipino</option>
     </select>
 
-    <input class="tel" type="number" placeholder="cellphone number" minlength="11" maxlength="11">
-    <input class="email" type="text" placeholder="email/facebook" name="student_email">
+    <input class="tel" type="number" placeholder="cellphone number" minlength="11" maxlength="11" required>
+    <input class="email" type="text" placeholder="email/facebook" name="student_email" required>
 
     <h3 class="info">Personal Information</h3>
 
     <div class="gender">
-      <input type="radio" id="male" name="gender" value="male" class="male">
+      <input type="radio" id="male" name="gender" value="male" class="male" required>
       <label for="male">Male</label><br>
       <input type="radio" id="female" name="gender" value="female" class="female">
       <label for="female">Female</label><br>
     </div>
 
     <div class="status">
-      <input type="radio" id="single" name="civil_status" value="status" class="single">
+      <input type="radio" id="single" name="civil_status" value="Single" class="single" required>
       <label for="single">Single</label><br>
 
       <input type="radio" id="widow" name="civil_status" value="widow/er" class="widow">
       <label for="widow">Widow/er</label><br>
 
-      <input type="radio" id="elementary graduate" name="civil_status" value="elementary graduate" class="solo">
+      <input type="radio" id="elementary graduate" name="civil_status" value="SoloParent" class="solo">
       <label for="solo">SoloParent</label><br>
 
       <input type="radio" id="married" name="civil_status" value="married" class="married">
@@ -1239,7 +1243,7 @@ input[type=readio]{
     </div>
 
     <div class="employment">
-      <input type="radio" id="employed" name="employment" value="employed" class="employed">
+      <input type="radio" id="employed" name="employment" value="employed" class="employed" required>
       <label for="employed">Employed</label><br>
 
       <input type="radio" id="unemployed" name="employment" value="unemployed" class="unemployed">
@@ -1347,7 +1351,7 @@ input[type=readio]{
 
   </div>
 
-    <input class="numb" type="number" placeholder="cellphone number" name="pcellphone_number">
+    <input class="numb" type="number" placeholder="cellphone number" name="pcellphone_number" required>
 
     <h3 class="ling">Complete Permanent Mailing Address</h3>
 
@@ -1372,7 +1376,7 @@ input[type=readio]{
       <option value="Negros Occidental" selected>Negros Occidental</option>
     </select>
 
-    <select id="muni" name="muni" class="muni1">
+    <select id="pmuni" name="pmuni" class="muni1">
       <option value="" selected disabled>Select City/Municapility</option>
       <option value="Bago City">Bago City</option> <option value="Binalbagan">Binalbagan</option>
       <option value="Candoni">Candoni</option> <option value="Cauayan">Cauayan</option>
@@ -1391,15 +1395,15 @@ input[type=readio]{
       <option value="Victorias City">Victorias City</option>
     </select>
 
-    <select id="dist" name="dist" class="dist1">
-      <option value="none" selected>Select District</option>
+    <select  name="dist" class="dist1">
+      <option value="none" selected id="pselected_zip">Select District</option>
     </select>
 
-    <select id="Zip" name="Zip" class="Zip1" required>
-      <option value="none" selected>Zip Code</option>
+    <select  name="Zip" class="Zip1" required>
+      <option value="none" id="pZip" selected>Zip Code</option>
     </select>
 
-    <input class="numb1" type="number" placeholder="cellphone number" name="student_contactNumber">
+    <input class="numb1" type="number" placeholder="cellphone number" name="student_contactNumber" required>
 
 
     <h3 class="trainee">Learner/Trainee/Student(Clients)Classification</h3>
@@ -1565,15 +1569,41 @@ input[type=readio]{
             $(".txt, #muni, .checkbox").each(function() {
                 $(this).change(function(){
                     var muni = $(this).val();
-                    console.log(muni)
+                    $('#selected_zip').val(getDist(muni));
+                    $('#selected_zip').html(getDist(muni));
+                    $('#Zip').val(getZip(muni));
+                    $('#Zip').html(getZip(muni));
+                });
+            });
+            $(".txt, #pmuni, .checkbox").each(function() {
+                $(this).change(function(){
+                    var muni = $(this).val();
+                    $('#pselected_zip').val(getDist(muni));
+                    $('#pselected_zip').html(getDist(muni));
+                    $('#pZip').val(getZip(muni));
+                    $('#pZip').html(getZip(muni));
                 });
             });
         });
 
         function getZip(muni){
             var zip = {
-                ''
+                'Bago City': '6101',
+                'Candoni': '6110',
+                'Don Salvador Benedicto': '6133',
+                'Escalante City': '6124'
             }
+            return zip[`${muni}`];
+        }
+
+        function getDist(muni){
+            var dist = {
+                'Bago City': '4th',
+                'Candoni': '6th',
+                'Don Salvador Benedicto': '1st',
+                'Escalante City': '1st'
+            }
+            return dist[`${muni}`];
         }
 
     </script>

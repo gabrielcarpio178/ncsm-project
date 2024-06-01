@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classification;
+use App\Models\Parents;
+use App\Models\Students;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class StudentsController extends Controller
 {
     public function registerStudent(Request $request){
-        $student = $request->validate([
-            'fname'=>'required',
-            'lname'=> 'required',
-            'mname'=> 'required',
-            'sname'=> 'required',
-            "course"=> 'required',
-            'student_numberStreet'=> 'required',
-            'student_contactNumber'=> 'required',
-            'student_email'=>'required|email|unique:email',
-            'muni'=> 'required',
-            'dist'=> 'required',
-            'zip'=> 'required|numeric',
-            'gender'=> 'required'
-        ]);
-        dd($request);
+
+        $student = ['course'=>$request->course,'fname'=> strtolower($request->fname), 'lname'=>strtolower($request->lname), 'mname'=>strtolower($request->mname), 'sname'=>strtolower($request->sname), 'street_number'=>$request->student_numberStreet, 'city'=>$request->muni,'district'=>$request->dist,'zipcode'=>$request->zip, 'email'=> $request->student_email, 'gender'=>$request->gender, 'civil_status'=>$request->civil_status, 'employment'=>$request->employment, 'birthdate'=>$request->birthdate, 'nationality'=>$request->country, 'contact_number'=>$request->student_contactNumber, 'birthplace'=>$request->municapility];
+        Students::create($student);
+        $lastest_id = DB::table('students')->latest('updated_at')->first();
+        $parents = ['students_id'=>$lastest_id->id,'plname'=>$request->plname, 'pfname'=>$request->pfname, 'pmname'=>$request->pmname,'psname'=>$request->psname,'pcontact_number'=>$request->pcellphone_number];
+        Parents::create($parents);
+        foreach($request->classification as $classification){
+            $classification_data = ['students_id'=>$lastest_id->id, 'classification_data'=>$classification];
+            Classification::create($classification_data);
+        }
+
+        return redirect()->back()->with('success','Send Successs');
+
     }
 }

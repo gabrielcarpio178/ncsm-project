@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Students extends Model
 {
     use HasFactory;
@@ -25,9 +26,18 @@ class Students extends Model
         "gender",
         "civil_status",
         "employment",
+        "status",
         "birthdate",
         "birthplace",
     ];
 
+
+    public function parents(){
+        return $this->hasOne(Parents::class);
+    }
+
+    public function classification(){
+        return $this->hasMany(Classification::class);
+    }
 
 }
