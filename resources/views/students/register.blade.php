@@ -1366,7 +1366,7 @@ input[type=readio]{
     <h5 class="prov2">Province *</h5>
     <h5 class="city2">City/Municipality *</h5>
 
-    <input class="number1" type="text" placeholder="Number, Street" name="number-street">
+    <input class="number1" type="text" placeholder="Number, Street" name="number_street">
 
     <select id="region" name="region" class="reg1" disabled>
         <option value="western visayas" selected>VI</option>
@@ -1395,7 +1395,7 @@ input[type=readio]{
       <option value="Victorias City">Victorias City</option>
     </select>
 
-    <select  name="dist" class="dist1">
+    <select  name="pdist" class="dist1">
       <option value="none" selected id="pselected_zip">Select District</option>
     </select>
 
@@ -1550,7 +1550,7 @@ input[type=readio]{
 <label for="34">Person With Disabilities</label>
 </div>
 
-<button type="submit" class="submit">Next</button>
+<button type="submit" class="submit">Submit</button>
 
     </form>
 

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('gender');
             $table->string('civil_status');
+            $table->string('education');
             $table->string('employment');
             $table->boolean('status')->default(0);
             $table->date('birthdate');

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Students;
 use App\Models\User_info;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
+
 
 class AdminController extends Controller
 {
@@ -16,19 +18,34 @@ class AdminController extends Controller
     }
 
     public function register_student(){
-
-        $students = Students::orderBy('id', 'desc')->paginate(10);
-
+        $students = Students::where('status','=','TRUE')->orderBy('id', 'desc')->paginate(10);
         return view("pages.adminRegisterStudent", ['students'=>$students]);
-
     }
 
-    public function search(Request $request){
+    public function gotoApplicant(){
+        $students = Students::where('status','=','FALSE')->orderBy('id', 'desc')->paginate(10);
+        return view('pages.adminapplicant', ['students'=>$students]);
+    }
+
+
+
+    public function search_applicant(Request $request){
         $request->validate([
             'search'=> ['required'],
         ]);
-        $students = Students::where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
-        return view("pages.adminRegisterStudent", ['students'=>$students]);
+        $students = Students::where("status","=","FALSE")->where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
+        return view("pages.adminapplicant", ['students'=>$students]);
+    }
+
+    public function filter_applicant($course){
+        dd($course);
+    }
+    public function search_register(Request $request){
+        $request->validate([
+            'search'=> ['required'],
+        ]);
+        $students = Students::where("status","=","TRUE")->where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
+        return view("pages.adminapplicant", ['students'=>$students]);
     }
 
     public function update(Request $request, $id){
@@ -51,7 +68,8 @@ class AdminController extends Controller
 
     public function student_profile($id){
         $student = Students::find($id);
-        return view('pages.user_profile', ['student'=>$student]);
+        $student['birthdate'] = date("M-d-Y", strtotime($student['birthdate']));
+        return view('pages.adminuser_profile', ['student'=>$student]);
     }
 
 

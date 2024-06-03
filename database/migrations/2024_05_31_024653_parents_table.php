@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('pfname');
             $table->string('pmname');
             $table->string('psname');
+            $table->string('pcity');
+            $table->string('pdistrict');
+            $table->string('pzipcode');
+            $table->string('pmunicipality');
             $table->unsignedBigInteger('pcontact_number');
             $table->timestamps();
 

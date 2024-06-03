@@ -25,6 +25,7 @@ class Students extends Model
         "email",
         "gender",
         "civil_status",
+        "education",
         "employment",
         "status",
         "birthdate",
@@ -32,7 +33,7 @@ class Students extends Model
     ];
 
 
-    public function parents(){
+    public function parent(){
         return $this->hasOne(Parents::class);
     }
 

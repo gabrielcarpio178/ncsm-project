@@ -1,4 +1,5 @@
 @include('partials.header', ['title'=> 'Dashboard'])
+
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar></x-adminSidebar>
 <x-message></x-message>
@@ -18,7 +19,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['vgd']}}</p>
+                        <p class="text-5xl font-black mt-1">{{$total_count['Visual Graphic Design NCIII']}}</p>
                     </div>
                 </div>
             </div>
@@ -34,7 +35,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['ccs']}}</p>
+                        <p class="text-5xl font-black mt-1">{{$total_count['Animation NC II']}}</p>
                     </div>
                 </div>
             </div>
@@ -52,7 +53,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['ani']}}</p>
+                        <p class="text-5xl font-black mt-1">{{$total_count['Contact Center Services NC II']}}</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +69,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['ani2d']}}</p>
+                        <p class="text-5xl font-black mt-1">{{$total_count['2D Animation NC III']}}</p>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,10 @@ class Parents extends Model
         'plname',
         'pfname',
         'pmname',
+        'pcity',
+        'pdistrict',
+        'pzipcode',
+        'pmunicipality',
         'psname',
         'pcontact_number'
     ];

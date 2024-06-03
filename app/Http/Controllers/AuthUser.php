@@ -29,25 +29,26 @@ class AuthUser extends Controller
         }
     }
     public function admin(){
-        $total_numbers = Students::all();
+        // $total_numbers = Students::all();
+        $total_numbers = DB::table('students')
+        ->select('course', DB::raw('count(*) as total'))
+        ->groupBy('course')
+        ->get();
+        $total_count = array();
+        $courses = ["Visual Graphic Design NCIII", "Animation NC II", "Contact Center Services NC II", "2D Animation NC III"];
 
-        $vgd = 0;
-        $ccs = 0;
-        $ani = 0;
-        $ani2d = 0;
-        foreach($total_numbers as $total_number){
-            if($total_number->course==="Visual Graphic Design NCIII"){
-                $vgd =+ 1;
-            }elseif($total_number->course==="Contact Center Services NC II"){
-                $ccs =+ 1;
-            }elseif($total_number->course=== "Animation NC II"){
-                $ani =+ 1;
-            }elseif($total_number->course=== "2D Animation NC III"){
-                $ani2d =+1;
+        foreach($courses as $course){
+            foreach($total_numbers as $total_number){
+                if($course==$total_number->course){
+                    $total_count[$course] = $total_number->total;
+                    break;
+                }else{
+                    $total_count[$course] = 0;
+                }
             }
         }
-        $total_count = ['vgd'=>$vgd, 'ccs'=>$ccs,'ani'=>$ani,'ani2d'=>$ani2d];
 
+        // dd($total_count);
         return view('pages.admin', ['total_count'=>$total_count])->with('success','Welcome Admin');
     }
     public function staff(){

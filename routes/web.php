@@ -9,8 +9,11 @@ Route::controller(AdminController::class)->group(function () {
     Route::get("/settings", "settings")->name("settings");
     Route::put("/settings/{id}","update")->name("update");
     Route::get("/register-student", 'register_student')->name('register_admin');
-    Route::post('/search','search')->name('search');
+    Route::post('/search/applicant','search_applicant')->name('search.applicant');
+    Route::post('/search/register','search_register')->name('search.registers');
     Route::get('/student_profile/{id}','student_profile')->name('student_profile');
+    Route::get('/applicant','gotoApplicant')->name('applicant_admin');
+    Route::get('/filter/applicant/{course}','filter_applicant')->name('filter_applicant');
 });
 
 Route::controller(AuthUser::class)->group(function(){
@@ -28,3 +31,7 @@ Route::get("/register",function () {
 Route::controller(StudentsController::class)->group(function () {
     Route::post("/registerStudent","registerStudent")->name("register_student");
 });
+
+
+
+

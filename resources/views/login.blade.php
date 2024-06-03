@@ -7,7 +7,7 @@
 
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 relative pt-10">
                 <div class="flex items-center justify-center w-40 h-40 absolute md:-top-20 lg:-top-[90px] left-1/2 -translate-x-1/2">
-                    <img src="/images/nolitc.png" alt="nolitc logo" class="w-80">
+                    <img src="{{asset("images/nolitc.png")}}" alt="nolitc logo" class="w-80">
                 </div>
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center md:m-0 lg:mt-10">

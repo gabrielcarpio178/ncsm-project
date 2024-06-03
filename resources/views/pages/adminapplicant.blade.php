@@ -1,15 +1,25 @@
-@include('partials.header', ['title'=> 'Register Student'])
+@include('partials.header', ['title'=> 'Applicant'])
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar></x-adminSidebar>
 <main class="w-[86.6%] absolute top-40 left-64 p-10">
-    <form action="{{route('search.registers')}}" method="POST">
-        @csrf
-        <section class="w-full flex flex-row gap-x-2">
-            {{-- nolitcText --}}
-            <input type="text" class="border border-solid border-black-600 w-56 h-11 rounded-md focus:outline-none px-2" name="search">
-            <button class="w-20 bg-[#168753] rounded-md text-white hover:bg-green-900" type="submit">Search</button>
-        </section>
-    </form>
+    <div class="flex gap-x-2">
+        <form action="{{route('search.applicant')}}" method="POST">
+            @csrf
+            <section class="w-full flex flex-row gap-x-2">
+                {{-- nolitcText --}}
+                <input type="text" class="border border-solid border-black-600 w-56 h-11 rounded-md focus:outline-none px-2" name="search">
+                <button class="w-20 bg-[#168753] rounded-md text-white hover:bg-green-900" type="submit">Search</button>
+            </section>
+        </form>
+        {{-- <select name="filter" id="filter" class="border border-solid border-black-600 w-56 h-11 rounded-md focus:outline-none px-2">
+            <option value="" selected disabled>Filter by Course</option>
+            <option value="Visual Graphic Design NCIII">Visual Graphic Design NCIII</option>
+            <option value="Contact Center Services NC II">Contact Center Services NC II</option>
+            <option value="Animation NC II">Animation NC II</option>
+            <option value="2D Animation NC III">2D Animation NC III</option>
+        </select> --}}
+    </div>
+
     <section class="w-full mt-5 overflow-x-auto">
         @if ($students->count()!==0)
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -59,5 +69,6 @@
     function clickRow(url){
         window.location.href=url;
     }
+
 </script>
 @include('partials.footer')

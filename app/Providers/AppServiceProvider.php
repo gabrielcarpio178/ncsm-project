@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Students;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+        $total_numbers = Students::where("status","=","FALSE")->count();
+        if($total_numbers===null){
+            $total_numbers = 0 ;
+        }
+        View::share(["total_numbers"=> $total_numbers]);
     }
 }

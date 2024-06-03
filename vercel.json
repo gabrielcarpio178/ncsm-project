@@ -24,12 +24,9 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie"
-    },
+    }
 
-    "builds": [
-        { "src": "index.html", "use": "@vercel/static" },
-        { "src": "images/*", "use": "@vercel/static" }
-        ]
+
 
 
 }
