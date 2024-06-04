@@ -2,7 +2,11 @@
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar></x-adminSidebar>
 <main class="w-[86.6%] absolute top-40 left-64 p-10">
-    <form action="{{route('search.registers')}}" method="POST">
+    <div class="text-2xl font-black text-[#168753]">
+        Registered Student
+    </div>
+
+    <form action="{{route('search.registers')}}" method="POST" class="mt-2">
         @csrf
         <section class="w-full flex flex-row gap-x-2">
             {{-- nolitcText --}}
@@ -38,7 +42,7 @@
                             <td class="px-6 py-4 capitalize">
                                 0{{$student->contact_number}}
                             </td>
-                            <td class="px-6 py-4 capitalize">
+                            <td class="px-6 py-4 uppercase">
                                 {{$student->email}}
                             </td>
                         </tr>

@@ -1156,7 +1156,7 @@ input[type=readio]{
     <h5 class="code">Zip Code</h5>
     <h5 class="nationality">Nationality *</h5>
     <h5 class="num">Contact Number</h5>
-    <h5 class="mail">Email Address/Facebook Account *</h5>
+    <h5 class="mail">Email Address*</h5>
     <h5 class="sex">Sex</h5>
     <h5 class="civil">Civil Status</h5>
     <h5 class="employ">Employment Status (before the training)</h5>
@@ -1214,7 +1214,7 @@ input[type=readio]{
     </select>
 
     <input class="tel" type="number" placeholder="cellphone number" minlength="11" maxlength="11" required>
-    <input class="email" type="text" placeholder="email/facebook" name="student_email" required>
+    <input class="email" type="email" placeholder="email" name="student_email" required>
 
     <h3 class="info">Personal Information</h3>
 

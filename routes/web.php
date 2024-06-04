@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthUser;
+use App\Http\Controllers\PhpmailerController;
 use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/student_profile/{id}','student_profile')->name('student_profile');
     Route::get('/applicant','gotoApplicant')->name('applicant_admin');
     Route::get('/filter/applicant/{course}','filter_applicant')->name('filter_applicant');
+    Route::post('/delete-aplicant','deleteApplicant')->name('delete.applicant');
+    Route::put('/accept-aplicant','acceptApplicant')->name('accept.applicant');
+    Route::get('/printpdf/{id}','downloadPdf')->name('print.pdf');
 });
 
 Route::controller(AuthUser::class)->group(function(){
@@ -31,6 +35,7 @@ Route::get("/register",function () {
 Route::controller(StudentsController::class)->group(function () {
     Route::post("/registerStudent","registerStudent")->name("register_student");
 });
+
 
 
 
