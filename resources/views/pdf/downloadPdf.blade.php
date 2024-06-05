@@ -40,6 +40,16 @@
     span{
         text-transform: capitalize;
     }
+    .data-content{
+        white-space: nowrap;
+        position: relative;
+    }
+    .right-div{
+        position: absolute;
+        top: 0%;
+        float: right;
+    }
+
 </style>
 
 <body>
@@ -57,10 +67,46 @@
         <hr>
         <div class="data-content">
             <p class="w-50">Full name: <span>{{$data['student']->fname." ".$data['student']->lname}}</span></p>
-            <p class="w-50">Nationality: <span>{{$data['student']->nationality}}</span></p>
+            <p class="w-25 right-div">Nationality: <span>{{$data['student']->nationality}}</span></p>
+        </div>
+        <div class="data-content">
+            <p class="w-50">Employment Status: <span>{{$data['student']->employment}}</span></p>
+            <p class="w-25 right-div">Sex: <span>{{$data['student']->gender}}</span></p>
+            <p class="w-25 right-div">Civil Status: <span>{{$data['student']->civil_status}}</span></p>
         </div>
 
-    </div>
+        <div class="data-content border border-white">
+            <p class="text-nowrap positon-relative">Complete Address: <span class="position-absolute top-0">{{$data['student']->street_number." ".$data['student']->city." "."Negros Occidental"." ".$data['student']->zipcode}}</span></p>
+        </div>
 
+        <div class="data-content">
+            <p class="w-50">Birthday: <span>{{$data['student']->birthdate}}</span></p>
+        </div>
+
+        <div class="data-content">
+            <p class="w-50 positon-relative">Contact Number: <span class="position-absolute top-0">0{{$data['student']->contact_number}}</span></p>
+            <p class="w-50 right-div">Email: <span>{{$data['student']->email}}</span></p>
+        </div>
+
+        <div class="data-content">
+            <p class="w-75">Educational Attainment Before the Training (Trainee): <span>{{$data['student']->education}}</span></p>
+        </div>
+        <div class="data-content">
+            <p class="w-25">Birthplace: <span>{{$data['student']->birthplace}}</span></p>
+        </div>
+        <div class="data-content">
+            <p>Learner/Trainee/Student (Clients) Classification:</p>
+            <ul class="classification">
+                @foreach ($data['student']->classification as $classification)
+                    <li>{{$classification->classification_data}}</li>
+                @endforeach
+            </ul>
+        </div>
+        <hr>
+        <div class="data-content border border-white">
+            <p class="w-50">Parent/Guardian: <span>{{$data['student']->parent->pfname." ".$data['student']->parent->plname}}</span></p>
+            <p class="w-50 right-div text-nowrap">Complete Address: <span>{{$data['student']->parent->pstreet_number." ".$data['student']->parent->pmunicipality." ".$data['student']->parent->pzipcode}}</span></p>
+        </div>
+    </div>
 </body>
 </html>

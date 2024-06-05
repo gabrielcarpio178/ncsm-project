@@ -156,7 +156,7 @@
             <div class="grid grid-cols-2 mt-2">
                 <div>
                     <h2 class="text-2xl font-black capitalize">
-                        {{$student->parent->pcity}}
+                        {{$student->parent->pmunicipality}}
                     </h2>
                     <p>City</p>
                 </div>

@@ -25,6 +25,7 @@ Route::controller(AuthUser::class)->group(function(){
     Route::post('/loginAction','loginAction')->name('loginAction');
     Route::get('/staff','staff')->name('staff')->middleware('auth');
     Route::get('/admin','admin')->name('admin')->middleware('auth');
+    Route::get('/officer','officer')->name('officer')->middleware('auth');
     Route::post('/signoutAction', 'signoutAction')->name('signoutAction');
 });
 

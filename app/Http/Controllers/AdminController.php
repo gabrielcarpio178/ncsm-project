@@ -116,6 +116,7 @@ class AdminController extends Controller
 
     public function downloadPdf($id){
         $student = Students::find($id);
+        $student['birthdate'] = date("M-d-Y", strtotime($student['birthdate']));
         $data = [
             'title' => 'student profile',
             'student' =>  $student

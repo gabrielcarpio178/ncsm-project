@@ -17,7 +17,7 @@ class StudentsController extends Controller
         Students::create($student);
 
         $lastest_id = DB::table('students')->latest('updated_at')->first();
-        $parents = ['students_id'=>$lastest_id->id,'plname'=>$request->plname, 'pfname'=>$request->pfname, 'pmname'=>$request->pmname,'psname'=>$request->psname,'pcontact_number'=>$request->pcellphone_number, 'pcity'=>$request->number_street, 'pmunicipality'=>$request->pmuni, 'pdistrict'=>$request->pdist, 'pzipcode'=>$request->Zip];
+        $parents = ['students_id'=>$lastest_id->id,'plname'=>$request->plname, 'pfname'=>$request->pfname, 'pmname'=>$request->pmname,'psname'=>$request->psname,'pcontact_number'=>$request->pcellphone_number, 'pstreet_number'=>$request->number_street, 'pmunicipality'=>$request->pmuni, 'pdistrict'=>$request->pdist, 'pzipcode'=>$request->Zip];
         Parents::create($parents);
 
         foreach($request->classification as $classification){

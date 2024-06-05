@@ -16,13 +16,14 @@ class AuthUser extends Controller
             "username"=> ["required"],
             "password"=> ["required"]
         ]);
-        // echo bcrypt($data["password"]);
         if(auth()->attempt($data)){
             $request->session()->regenerate();
             if(auth()->user()->usertype == "staff"){
                 return redirect()->route('staff')->with('success','welcome staff');
             }else if(auth()->user()->usertype == 'admin'){
                 return redirect()->route('admin')->with('success','welcome admin');
+            }else if(auth()->user()->usertype == 'officer'){
+                return redirect()->route('officer')->with('success','welcome officer');
             }
         }else{
             return back()->with('invalid','Invalid Credentials!');
@@ -53,6 +54,9 @@ class AuthUser extends Controller
     }
     public function staff(){
         return view('pages.staff')->with('success','Welcome Staff');
+    }
+    public function officer(){
+        return view('pages.officer')->with('success','Welcome Staff');
     }
 
     public function signoutAction(Request $request){
