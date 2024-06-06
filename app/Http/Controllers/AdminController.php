@@ -8,7 +8,12 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Validation\Rule;
 use App\Mail\Sendemail;
+use App\Models\Contents;
+use App\Models\Images;
 use Illuminate\Support\Facades\Mail;
+
+
+
 
 
 class AdminController extends Controller
@@ -125,6 +130,31 @@ class AdminController extends Controller
         $pdf = Pdf::loadView('pdf.downloadPdf', ['data'=>$data])->setPaper('a4', 'portrait');
         return $pdf->download($student->fname." ".$student->lname.".pdf");
     }
+
+    public function upload_welcome(){
+        $content = Contents::find(1);
+        return view("pages.adminwelcome", ['image'=>$content->images['0']]);
+    }
+
+    public function upload_cover(Request $request){
+        $filename = '';
+
+        if($request->hasFile("image_upload")){
+            $request->validate([
+                'image_upload'=>'mimes:jpeg,png,bmp,tiff |max:4094',
+            ]);
+            $database = time().'.'.$request->image_upload->extension() ;
+            $filename = $request->getSchemeAndHttpHost(). '/assets/img/'.$database;
+            $request->image_upload->move(public_path('/assets/img/'), $filename);
+            $content = Images::where('contents_id','=','1')->first();
+            $content['image'] = $database;
+            $content->save();
+            $content_img = Contents::find(1);
+            return view("pages.adminwelcome", ['image'=>$content_img->images['0']])->with('success', 'Update cover photo success');
+        }
+    }
+
+
 
 }
 

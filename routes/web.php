@@ -18,6 +18,8 @@ Route::controller(AdminController::class)->group(function () {
     Route::post('/delete-aplicant','deleteApplicant')->name('delete.applicant');
     Route::put('/accept-aplicant','acceptApplicant')->name('accept.applicant');
     Route::get('/printpdf/{id}','downloadPdf')->name('print.pdf');
+    Route::get('/upload-welcome/','upload_welcome')->name('upload-welcome');
+    Route::put('/upload-cover/','upload_cover')->name('upload_cover');
 });
 
 Route::controller(AuthUser::class)->group(function(){
