@@ -4,6 +4,9 @@
 <x-adminSidebar></x-adminSidebar>
 <x-alertmessage></x-alertmessage>
 <main class="w-[86.6%] absolute top-40 left-64 flex flex-col gap-y-8 z-1">
+    <div class="text-2xl font-black text-[#168753] pt-5 pl-5">
+        Update Welcome
+    </div>
     <div class="relative" style="width:100%; height: 60vh">
         <img src="{{'assets/img/'.$image['image']}}" alt="cover photo" class="w-full h-full" id="imgPreview">
 
@@ -14,6 +17,10 @@
             </div>
         </div>
     </div>
+  </div>
+
+  <div class="w-full flex justify-center">
+    <button class="w-[10%] bg-[#168753] rounded-md text-white hover:bg-green-900 py-2 px-3 h-[5%] font-black">Register</button>
   </div>
 
     <form action="{{route('upload_cover')}}" class="hidden" method="post" enctype="multipart/form-data">

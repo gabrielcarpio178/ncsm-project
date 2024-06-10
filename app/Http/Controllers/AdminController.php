@@ -8,8 +8,13 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Validation\Rule;
 use App\Mail\Sendemail;
+use App\Models\Benefits;
+use App\Models\Competencies;
 use App\Models\Contents;
 use App\Models\Images;
+use App\Models\Programs;
+use App\Models\Qualifications;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -133,7 +138,12 @@ class AdminController extends Controller
 
     public function upload_welcome(){
         $content = Contents::find(1);
-        return view("pages.adminwelcome", ['image'=>$content->images['0']]);
+
+        if($content!=null){
+            return view("pages.adminwelcome", ['image'=>$content->images['0']]);
+        }else{
+            return view("pages.adminwelcome", ['image'=>'default.jpg']);
+        }
     }
 
     public function upload_cover(Request $request){
@@ -154,7 +164,72 @@ class AdminController extends Controller
         }
     }
 
+    public function program_management(){
+        return view('pages.adminprogrammanagemant');
+    }
 
+    public function program_management_form(){
+        $programs = Programs::all();
+        return view('pages.adminprogramsform', ['programs'=>$programs]);
+    }
+
+    public function programs_addform(){
+        return view('pages.adminprogramsinsertform');
+    }
+
+    public function addTesdaQualification(Request $request){
+        $data = $request->validate([
+            'course_name'=> 'required',
+            'hours'=> 'required|numeric',
+            'course_caption'=> 'required',
+            'qualification'=> 'required|array',
+            'benefits'=> 'required|array',
+            'competencies'=> 'required|array',
+            'image'=>'mimes:jpeg,png,bmp,tiff |max:4094',
+        ]);
+        $database = time().'.'.$data['image']->extension() ;
+        $filename = $request->getSchemeAndHttpHost(). '/assets/img/'.$database;
+        $data['image']->move(public_path('/assets/img/'), $filename);
+
+       Programs::create([
+        'name'=> $data['course_name'],
+        'hours'=> $data['hours'],
+        'caption'=> $data['course_caption'],
+        'img_name' => $database,
+       ]);
+
+       $lastest_id = DB::table('programs')->latest('updated_at')->first();
+
+       foreach($data['qualification'] as $qualification){
+            Qualifications::create([
+                'programs_id'=>$lastest_id->id,
+                'qualification'=>$qualification
+            ]);
+       }
+
+       foreach($data['benefits'] as $benefit){
+            Benefits::create([
+                'programs_id'=>$lastest_id->id,
+                'benefit'=>$benefit
+            ]);
+       }
+
+       foreach($data['competencies'] as $competencies){
+            Competencies::create([
+                'programs_id'=>$lastest_id->id,
+                'competencie'=>$competencies
+            ]);
+       }
+
+       $programs = Programs::all();
+       return view('pages.adminprogramsform', ['programs'=>$programs]);
+
+    }
+
+    public function program_qualification($id){
+        $program = Programs::find($id);
+        return view('pages.adminprogramsContent', ['program'=>$program]);
+    }
 
 }
 

@@ -35,7 +35,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['Animation NC II']}}</p>
+                        <p class="text-5xl font-black mt-1">{{$total_count['Contact Center Services NC II']}}</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         <h3 class="text-xl">
                             Number of Students
                         </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['Contact Center Services NC II']}}</p>
+                         <p class="text-5xl font-black mt-1">{{$total_count['Animation NC II']}}</p>
                     </div>
                 </div>
             </div>

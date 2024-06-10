@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Students;
+use App\Models\User_info;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthUser extends Controller
 {
@@ -16,7 +18,8 @@ class AuthUser extends Controller
             "username"=> ["required"],
             "password"=> ["required"]
         ]);
-        if(auth()->attempt($data)){
+        $user = User_info::where("username", $data["username"])->first();
+        if(auth()->attempt($data)||Hash::check($data["password"], $user->password)){
             $request->session()->regenerate();
             if(auth()->user()->usertype == "staff"){
                 return redirect()->route('staff')->with('success','welcome staff');
@@ -30,7 +33,7 @@ class AuthUser extends Controller
         }
     }
     public function admin(){
-        // $total_numbers = Students::all();
+        $total_numbers = Students::all();
         $total_numbers = DB::table('students')
         ->select('course', DB::raw('count(*) as total'))
         ->groupBy('course')
@@ -49,7 +52,6 @@ class AuthUser extends Controller
             }
         }
 
-        // dd($total_count);
         return view('pages.admin', ['total_count'=>$total_count])->with('success','Welcome Admin');
     }
     public function staff(){

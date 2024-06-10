@@ -1366,7 +1366,7 @@ input[type=readio]{
     <h5 class="prov2">Province *</h5>
     <h5 class="city2">City/Municipality *</h5>
 
-    <input class="number1" type="text" placeholder="Number, Street" name="number_street">
+    <input class="number1" type="text" placeholder="Number, Street" name="number_street" required>
 
     <select id="region" name="region" class="reg1" disabled>
         <option value="western visayas" selected>VI</option>
@@ -1376,7 +1376,7 @@ input[type=readio]{
       <option value="Negros Occidental" selected>Negros Occidental</option>
     </select>
 
-    <select id="pmuni" name="pmuni" class="muni1">
+    <select id="pmuni" name="pmuni" class="muni1" required>
       <option value="" selected disabled>Select City/Municapility</option>
       <option value="Bago City">Bago City</option> <option value="Binalbagan">Binalbagan</option>
       <option value="Candoni">Candoni</option> <option value="Cauayan">Cauayan</option>

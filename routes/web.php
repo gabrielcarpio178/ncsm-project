@@ -5,21 +5,29 @@ use App\Http\Controllers\AuthUser;
 use App\Http\Controllers\PhpmailerController;
 use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\Drivers\Gd\Modifiers\RotateModifier;
 
-Route::controller(AdminController::class)->group(function () {
-    Route::get("/settings", "settings")->name("settings");
-    Route::put("/settings/{id}","update")->name("update");
-    Route::get("/register-student", 'register_student')->name('register_admin');
-    Route::post('/search/applicant','search_applicant')->name('search.applicant');
-    Route::post('/search/register','search_register')->name('search.registers');
-    Route::get('/student_profile/{id}','student_profile')->name('student_profile');
-    Route::get('/applicant','gotoApplicant')->name('applicant_admin');
-    Route::get('/filter/applicant/{course}','filter_applicant')->name('filter_applicant');
-    Route::post('/delete-aplicant','deleteApplicant')->name('delete.applicant');
-    Route::put('/accept-aplicant','acceptApplicant')->name('accept.applicant');
-    Route::get('/printpdf/{id}','downloadPdf')->name('print.pdf');
-    Route::get('/upload-welcome/','upload_welcome')->name('upload-welcome');
-    Route::put('/upload-cover/','upload_cover')->name('upload_cover');
+Route::middleware(['auth'])->group(function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get("/settings", "settings")->name("settings");
+        Route::put("/settings/{id}","update")->name("update");
+        Route::get("/register-student", 'register_student')->name('register_admin');
+        Route::post('/search/applicant','search_applicant')->name('search.applicant');
+        Route::post('/search/register','search_register')->name('search.registers');
+        Route::get('/student_profile/{id}','student_profile')->name('student_profile');
+        Route::get('/applicant','gotoApplicant')->name('applicant_admin');
+        Route::get('/filter/applicant/{course}','filter_applicant')->name('filter_applicant');
+        Route::post('/delete-aplicant','deleteApplicant')->name('delete.applicant');
+        Route::put('/accept-aplicant','acceptApplicant')->name('accept.applicant');
+        Route::get('/printpdf/{id}','downloadPdf')->name('print.pdf');
+        Route::get('/upload-welcome/','upload_welcome')->name('upload-welcome');
+        Route::put('/upload-cover/','upload_cover')->name('upload_cover');
+        Route::get('/program-management','program_management')->name('program_management');
+        Route::get('/program-management/form','program_management_form')->name('programs');
+        Route::get('/program-management/addform','programs_addform')->name('programs_addform');
+        Route::post('/program-addQualification','addTesdaQualification')->name('addTesdaQualification');
+        Route::get('/program/program/content/{id}','program_qualification')->name('see_more_program');
+    });
 });
 
 Route::controller(AuthUser::class)->group(function(){

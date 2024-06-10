@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for ncms-project on 2024-06-06T10:25:49+08:00
+# fly.toml app configuration file generated for ncms-project on 2024-06-10T09:21:08+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -14,6 +14,13 @@ console_command = 'php /var/www/html/artisan tinker'
 
 [env]
   APP_ENV = 'production'
+  APP_DEBUG = 'true'
+  DB_CONNECTION='pgsql'
+  DB_HOST='aws-0-ap-southeast-1.pooler.supabase.com'
+  DB_PORT='5432'
+  DB_DATABASE='postgres'
+  DB_USERNAME='postgres.hyyhzdleiylvnvbcfnmg'
+  DB_PASSWORD='0bL91M6vQ8iOg81W'
   LOG_CHANNEL = 'stderr'
   LOG_LEVEL = 'info'
   LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
@@ -29,6 +36,6 @@ console_command = 'php /var/www/html/artisan tinker'
   processes = ['app']
 
 [[vm]]
-  memory = '512mb'
+  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
