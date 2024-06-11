@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthUser;
+use App\Http\Controllers\NolitcController;
 use App\Http\Controllers\PhpmailerController;
 use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::controller(AuthUser::class)->group(function(){
-    Route::get('/', 'index')->name('login');
+    Route::get('/login-user', 'index')->name('login');
     Route::post('/loginAction','loginAction')->name('loginAction');
     Route::get('/staff','staff')->name('staff')->middleware('auth');
     Route::get('/admin','admin')->name('admin')->middleware('auth');
@@ -47,6 +48,14 @@ Route::controller(StudentsController::class)->group(function () {
     Route::post("/registerStudent","registerStudent")->name("register_student");
 });
 
+
+Route::controller(NolitcController::class)->group(function () {
+    Route::get("/","welcome")->name("welcome");
+    Route::get("/tesda_qual","tesda_qual")->name("tesda_qual");
+    Route::get("/see_more/{id}","see_more")->name("see-more");
+    Route::get("/ccs","ccs")->name("ccs");
+    Route::get("/know-more","know_more")->name("know_more");
+});
 
 
 

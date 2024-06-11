@@ -65,7 +65,7 @@ class AuthUser extends Controller
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('logout','Logout Success');
+        return redirect('/login-user')->with('logout','Logout Success');
     }
 
 }
