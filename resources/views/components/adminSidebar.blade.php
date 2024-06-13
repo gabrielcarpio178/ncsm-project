@@ -51,7 +51,7 @@
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('upload-welcome')}}">Update Welcome</a></li>
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('program_management')}}">Program Managemant</a></li>
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="#">Manage NOLITC Update</a></li>
-        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="#">Update Score Cards</a></li>
+        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('showScoreCard')}}">Update Score Cards</a></li>
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="#">Manage Partners</a></li>
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('settings')}}">Account Settings</a></li>
         <li class="px-10 text-md text-[#fff] text-lg hover:bg-slate-600 py-1 rounded">

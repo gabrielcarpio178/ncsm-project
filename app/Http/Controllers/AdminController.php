@@ -9,11 +9,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Validation\Rule;
 use App\Mail\Sendemail;
 use App\Models\Benefits;
+use App\Models\Classification;
 use App\Models\Competencies;
 use App\Models\Contents;
 use App\Models\Images;
 use App\Models\Programs;
 use App\Models\Qualifications;
+use App\Models\ScoreCard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -230,6 +232,81 @@ class AdminController extends Controller
         $program = Programs::find($id);
         return view('pages.adminprogramsContent', ['program'=>$program]);
     }
+
+    public function update_program($id){
+        $program = Programs::find($id);
+        return view('pages.adminprogramsupdateform', ['program'=>$program]);
+    }
+
+    public function updateContent_program(Request $request, $id){
+        $data = $request->validate([
+            'course_name'=> 'required',
+            'hours'=> 'required|numeric',
+            'course_caption'=> 'required',
+            'qualification'=> 'required|array',
+            'benefits'=> 'required|array',
+            'competencies'=> 'required|array',
+            'image'=>'mimes:jpeg,png,bmp,tiff |max:4094',
+        ]);
+
+        $program = Programs::find($id);
+
+        $program->name = $data['course_name'];
+        $program->hours = $data['hours'];
+        $program->caption = $data['course_caption'];
+        if($request->image!==null){
+            if($data['image']!==null){
+                $database = time().'.'.$data['image']->extension() ;
+                $filename = $request->getSchemeAndHttpHost(). '/assets/img/'.$database;
+                $data['image']->move(public_path('/assets/img/'), $filename);
+                $program->img_name = $database;
+            }
+        }
+        $program->save();
+
+        Qualifications::where('programs_id','=',$id)->delete();
+        Competencies::where('programs_id','=',$id)->delete();
+        Benefits::where('programs_id','=',$id)->delete();
+
+        foreach ($data['qualification'] as $qualification){
+            Qualifications::create([
+                'programs_id'=>$id,
+                'qualification'=>$qualification
+            ]);
+        }
+
+        foreach ($data['competencies'] as $competencies){
+            Competencies::create([
+                'programs_id'=>$id,
+                'competencie'=>$competencies
+            ]);
+        }
+
+        foreach ($data['benefits'] as $benefits){
+            Benefits::create([
+                'programs_id'=>$id,
+                'benefit'=>$benefits
+            ]);
+        }
+
+        return redirect()->back()->with('success','Update success');
+
+    }
+
+
+    public function delete_program(Request $request){
+       Programs::where('id','=',$request->delete_id)->delete();
+       $this->program_management_form();
+    }
+
+    public function showScoreCard()
+    {
+
+        $scoreCard = ScoreCard::all(); // Fetch all score cards
+        return view('pages.score_card', ['scoreCard' => $scoreCard]); // Pass the score cards to the view
+    }
+
+
 
 }
 

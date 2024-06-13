@@ -28,6 +28,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/program-management/addform','programs_addform')->name('programs_addform');
         Route::post('/program-addQualification','addTesdaQualification')->name('addTesdaQualification');
         Route::get('/program/program/content/{id}','program_qualification')->name('see_more_program');
+        Route::get('/program/program/upadate.content/{id}','update_program')->name('updateContent');
+        Route::post('/program/program/upadate.content/{id}','updateContent_program')->name('updateContent_program');
+        Route::delete('/program/delete','delete_program')->name('delete.programs');
+        Route::get('/scorecards','showScoreCard')->name('showScoreCard');
+
     });
 });
 

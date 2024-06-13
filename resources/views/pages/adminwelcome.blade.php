@@ -3,7 +3,8 @@
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar></x-adminSidebar>
 <x-alertmessage></x-alertmessage>
-<main class="w-[86.6%] absolute top-40 left-64 flex flex-col gap-y-8 z-1">
+<main class="w-[86.6%] absolute top-40 left-64 flex flex-col gap-y-8">
+    <x-alertmessage></x-alertmessage>
     <div class="text-2xl font-black text-[#168753] pt-5 pl-5">
         Update Welcome
     </div>

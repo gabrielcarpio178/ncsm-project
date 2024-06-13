@@ -14,8 +14,9 @@
         </form>
     </div>
     <div class="flex flex-col gap-y-5">
-
-
+        @if (count($programs)===0)
+            <p>No Programs Uploaded</p>
+        @endif
         @foreach ($programs as $program)
             <div class="w-full h-[65vh] mt-3 px-2 flex gap-x-4">
                 <div class="w-[40%] h-[65vh]">
