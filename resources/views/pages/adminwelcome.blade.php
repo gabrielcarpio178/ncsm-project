@@ -1,5 +1,4 @@
 @include('partials.header', ['title'=> 'Upload Welcome Page'])
-
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar></x-adminSidebar>
 <x-alertmessage></x-alertmessage>

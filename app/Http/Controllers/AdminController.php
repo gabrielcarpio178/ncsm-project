@@ -161,8 +161,9 @@ class AdminController extends Controller
             $content = Images::where('contents_id','=','1')->first();
             $content['image'] = $database;
             $content->save();
-            $content_img = Contents::find(1);
-            return view("pages.adminwelcome", ['image'=>$content_img->images['0']])->with('success', 'Update cover photo success');
+            // $content_img = Contents::find(1);
+            return redirect()->back()->with('success','Update cover photo success');
+            // return view("pages.adminwelcome", ['image'=>$content_img->images['0']])->with('success', 'Update cover photo success');
         }
     }
 
@@ -171,7 +172,7 @@ class AdminController extends Controller
     }
 
     public function program_management_form(){
-        $programs = Programs::all();
+        $programs = Programs::orderBy('id', 'DESC')->get();
         return view('pages.adminprogramsform', ['programs'=>$programs]);
     }
 
@@ -223,8 +224,8 @@ class AdminController extends Controller
             ]);
        }
 
-       $programs = Programs::all();
-       return view('pages.adminprogramsform', ['programs'=>$programs]);
+       //return $this->programs_addform();
+       return redirect('program-management/form')->with('success','Add Success');
 
     }
 
@@ -296,7 +297,7 @@ class AdminController extends Controller
 
     public function delete_program(Request $request){
        Programs::where('id','=',$request->delete_id)->delete();
-       $this->program_management_form();
+       return redirect('program-management/form')->with('success','Add Success');
     }
 
     public function showScoreCard()
