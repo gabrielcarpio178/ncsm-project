@@ -12,7 +12,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get("/settings", "settings")->name("settings");
         Route::put("/settings/{id}","update")->name("update");
-        Route::get("/register-student", 'register_student')->name('register_admin');
+
         Route::post('/search/applicant','search_applicant')->name('search.applicant');
         Route::post('/search/register','search_register')->name('search.registers');
         Route::get('/student_profile/{id}','student_profile')->name('student_profile');
@@ -32,7 +32,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/program/program/upadate.content/{id}','updateContent_program')->name('updateContent_program');
         Route::delete('/program/delete','delete_program')->name('delete.programs');
         Route::get('/scorecards','showScoreCard')->name('showScoreCard');
-
+        // Route::get('/register-student', 'studentInfo')->name('pages.adminRegisterStudent');
+        Route::get('/register-student', 'register_student')->name('register_admin');
+        Route::get('/students/{id}', 'filter_show')->name('students.show');
+        // Route::get('/register-student', 'studentInfo')->name('pages.adminRegisterStudent');
     });
 });
 
@@ -51,6 +54,7 @@ Route::get("/register",function () {
 
 Route::controller(StudentsController::class)->group(function () {
     Route::post("/registerStudent","registerStudent")->name("register_student");
+    Route::post("/registerStudent_submit","submit_data")->name("register_student_submit");
 });
 
 

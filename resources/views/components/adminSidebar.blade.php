@@ -32,16 +32,22 @@
 
 </div>
 
+<style>
+    a, a:hover{
+        text-decoration: none;
+        color: #fff;
+    }
+</style>
+
 <section class="fixed mt-40 bg-[#2c7b1f] w-64 h-full py-20 px-1">
 
     <ul class="flex flex-col gap-y-8">
         {{-- headerColor #fff--}}
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('admin')}}">Dashboard</a></li>
-        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('register_admin')}}">Registered Student</a></li>
         <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded">
-            <a href="{{route('applicant_admin')}}" class="flex justify-between w-full">
+            <a href="{{route('register_admin')}}" class="flex justify-between w-full">
                 <div>
-                    Applicants
+                    Student's List
                 </div>
                 <div class="rounded-full bg-red-600 w-6 text-center" id="total_number">
 

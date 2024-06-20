@@ -32,9 +32,11 @@ class AdminController extends Controller
     }
 
     public function register_student(){
-        $students = Students::where('status','=','TRUE')->orderBy('id', 'desc')->paginate(10);
+        $students = Students::orderBy('id', 'desc')->paginate(10);
         return view("pages.adminRegisterStudent", ['students'=>$students]);
     }
+
+
 
     public function gotoApplicant(){
         $students = Students::where('status','=','FALSE')->orderBy('id', 'desc')->paginate(10);
@@ -43,24 +45,22 @@ class AdminController extends Controller
 
 
 
-    public function search_applicant(Request $request){
-        $request->validate([
-            'search'=> ['required'],
-        ]);
-        $students = Students::where("status","=","FALSE")->where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
-        return view("pages.adminapplicant", ['students'=>$students]);
-    }
-
-    public function filter_applicant($course){
-        dd($course);
-    }
     public function search_register(Request $request){
         $request->validate([
             'search'=> ['required'],
         ]);
-        $students = Students::where("status","=","TRUE")->where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
+        $students = Students::where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
         return view("pages.adminapplicant", ['students'=>$students]);
     }
+
+    public function show($id)
+    {
+
+        $selectedStudent = Students::where('course','=',$id);
+        print_r($selectedStudent);
+        // return response()->json(['student' => $selectedStudent]);
+    }
+
 
     public function update(Request $request, $id){
         $data = $request->validate([
@@ -102,7 +102,7 @@ class AdminController extends Controller
         $student = Students::find($request->student_id);
         Mail::to($student->email)->send(new Sendemail($data));
         $student->delete();
-        return redirect()->route('applicant_admin');
+        return redirect()->route('register_admin');
     }
 
     public function acceptApplicant(Request $request){
@@ -122,7 +122,7 @@ class AdminController extends Controller
         Mail::to($student->email)->send(new Sendemail($data));
         $student['status'] = true;
         $student->save();
-        return redirect()->route('applicant_admin');
+        return redirect()->route('register_admin');
     }
 
 

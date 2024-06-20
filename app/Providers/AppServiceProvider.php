@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        $total_numbers = Students::where("status","=","FALSE")->count();
+        $total_numbers = Students::where("status","=",'FALSE')->count();
         if($total_numbers===null){
             $total_numbers = 0 ;
         }

@@ -13,19 +13,94 @@ class StudentsController extends Controller
 {
     public function registerStudent(Request $request){
 
-        $student = ['course'=>$request->course,'fname'=> strtolower($request->fname), 'lname'=>strtolower($request->lname), 'mname'=>strtolower($request->mname), 'sname'=>strtolower($request->sname), 'street_number'=>$request->student_numberStreet, 'city'=>$request->muni,'district'=>$request->dist,'zipcode'=>$request->zip, 'email'=> $request->student_email, 'gender'=>$request->gender, 'civil_status'=>$request->civil_status, 'employment'=>$request->employment, 'birthdate'=>$request->birthdate, 'nationality'=>$request->country, 'contact_number'=>$request->student_contactNumber, 'birthplace'=>$request->municapility, 'education'=>$request->education];
+        $data = $request->validate([
+           "course"=> 'required',
+           'lname'=> 'required',
+           'fname'=> 'required',
+           'mname'=> 'required',
+           'suffix'=> 'required',
+           'number-street'=> 'required',
+           'region'=> 'required',
+           'province'=> 'required',
+           'city-municipality'=> 'required',
+           'district'=>'required',
+           'zip'=> 'required|numeric',
+           'pnumber-street'=> 'required',
+           'pregion'=> 'required',
+           'pprovince'=> 'required',
+           'pcity-municipality'=> 'required',
+           'pdistrict'=>'required',
+           'pzip'=> 'required|numeric',
+            'nationality'=> 'required',
+            'contact-number'=> 'required|numeric|digits:11',
+            'email'=> 'required|email',
+            'gender'=> 'required',
+            'civil-status'=> 'required',
+            'employement'=> 'required',
+            'birthdate'=> 'required|before:today|date',
+            'birthplace-region'=> 'required',
+            'birthplace-province'=> 'required',
+            'birthplace-pcity-municipality'=> 'required',
+            'trainee'=> 'required',
+            'plname'=> 'required',
+            'pfname'=> 'required',
+            'pmname'=> 'required',
+            'psname'=> 'required',
+            'pcontact'=> 'required|numeric|digits:11',
+            'classification'=> 'required|array|min:1',
+        ]);
+        // dd($data);
+        return view('students.register_review',['data'=> $data]);
+    }
+
+    public function submit_data(Request $request){
+        $data = $request->validate([
+            "course"=> 'required',
+            'lname'=> 'required',
+            'fname'=> 'required',
+            'mname'=> 'required',
+            'suffix'=> 'required',
+            'number-street'=> 'required',
+            'region'=> 'required',
+            'province'=> 'required',
+            'city-municipality'=> 'required',
+            'district'=>'required',
+            'zip'=> 'required|numeric',
+            'pnumber-street'=> 'required',
+            'pregion'=> 'required',
+            'pprovince'=> 'required',
+            'pcity-municipality'=> 'required',
+            'pdistrict'=>'required',
+            'pzip'=> 'required|numeric',
+             'nationality'=> 'required',
+             'contact-number'=> 'required|numeric|digits:11',
+             'email'=> 'required|email',
+             'gender'=> 'required',
+             'civil-status'=> 'required',
+             'employement'=> 'required',
+             'birthdate'=> 'required|before:today|date',
+             'birthplace-region'=> 'required',
+             'birthplace-province'=> 'required',
+             'birthplace-pcity-municipality'=> 'required',
+             'trainee'=> 'required',
+             'plname'=> 'required',
+             'pfname'=> 'required',
+             'pmname'=> 'required',
+             'psname'=> 'required',
+             'pcontact'=> 'required|numeric|digits:11',
+             'classification'=> 'required|array|min:1',
+         ]);
+
+         $student = ['course'=>$data['course'],'fname'=> strtolower($data['fname']), 'lname'=>strtolower($data['lname']), 'mname'=>strtolower($data['mname']), 'sname'=>strtolower($data['suffix']), 'street_number'=>$data['number-street'], 'city'=>$data['city-municipality'],'district'=>$data['district'],'zipcode'=>$data['zip'], 'email'=> $data['email'], 'gender'=>$data['gender'], 'civil_status'=>$data['civil-status'], 'employment'=>$data['employement'], 'birthdate'=>$data['birthdate'], 'nationality'=>$data['nationality'], 'contact_number'=>$data['contact-number'], 'birthplace'=>$data['birthplace-pcity-municipality'], 'education'=>$data['trainee']];
         Students::create($student);
-
         $lastest_id = DB::table('students')->latest('updated_at')->first();
-        $parents = ['students_id'=>$lastest_id->id,'plname'=>$request->plname, 'pfname'=>$request->pfname, 'pmname'=>$request->pmname,'psname'=>$request->psname,'pcontact_number'=>$request->pcellphone_number, 'pstreet_number'=>$request->number_street, 'pmunicipality'=>$request->pmuni, 'pdistrict'=>$request->pdist, 'pzipcode'=>$request->Zip];
+        $parents = ['students_id'=>$lastest_id->id,'plname'=>$data['plname'], 'pfname'=>$data['pfname'], 'pmname'=>$data['pmname'],'psname'=>$data['psname'],'pcontact_number'=>$data['pcontact'], 'pstreet_number'=>$data['pnumber-street'], 'pmunicipality'=>$data['pcity-municipality'], 'pdistrict'=>$data['pdistrict'], 'pzipcode'=>$data['zip']];
         Parents::create($parents);
-
-        foreach($request->classification as $classification){
+        foreach($data['classification'] as $classification){
             $classification_data = ['students_id'=>$lastest_id->id, 'classification_data'=>$classification];
             Classification::create($classification_data);
         }
         event(new PusherBroadcast('Applicant name: '.$student['fname']));
-        return redirect()->back()->with('success','Send Successs');
-
+        return view('students.register');
     }
 }

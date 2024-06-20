@@ -32,6 +32,7 @@
                     <th scope="col" class="px-6 py-3 capitalize">Course</th>
                     <th scope="col" class="px-6 py-3 capitalize">Contact Number</th>
                     <th scope="col" class="px-6 py-3 capitalize">Email</th>
+                    <th scope="col" class="px-6 py-3 capitalize">Status</th>
                 </thead>
                 <tbody>
                     @php
@@ -54,6 +55,9 @@
                             <td class="px-6 py-4 capitalize">
                                 {{$student->email}}
                             </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{$student->status===false?'Pending':'Accepted'}}
+                            </td>
                         </tr>
                     @endforeach
 
@@ -68,6 +72,7 @@
 
     </section>
 </main>
+<script src="js/student-table.js"></script>
 <script>
     function clickRow(url){
         window.location.href=url;
