@@ -5,75 +5,53 @@
 <x-message></x-message>
 {{-- @dd($total_count) --}}
 <main class="w-[86.6%] absolute top-40 left-64 p-10">
-    <div class="flex flex-col p-20 items-center gap-20">
-        <div class="flex flex-row gap-20 w-full">
-            <div class="h-[10rem] w-full rounded overflow-hidden shadow-lg flex  bg-gray-50 dark:bg-gray-800">
-                <div class="w-1/2 h-[20rem]">
-                    <img class="w-[15rem] h-[10rem]" src="/images/vgd.png" alt="VISUAL GRAPHIC DESIGN">
-                </div>
-                <div class="py-4 font-black">
-                    <h1 class="text-nolitcText text-2xl">
-                        VISUAL GRAPHIC DESIGN
-                    </h1>
-                    <div class="mt-1">
-                        <h3 class="text-xl">
-                            Number of Students
-                        </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['Visual Graphic Design NCIII']}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="h-[10rem] w-full rounded overflow-hidden shadow-lg flex  bg-gray-50 dark:bg-gray-800">
-                <div class="w-1/2 h-[20rem]">
-                    <img class="w-[15rem] h-[10rem]" src="/images/ccs.png" alt="CONTACT CENTER SERVICES">
-                </div>
-                <div class="py-4 font-black">
-                    <h1 class="text-nolitcText text-2xl">
-                        CONTACT CENTER SERVICES
-                    </h1>
-                    <div class="mt-1">
-                        <h3 class="text-xl">
-                            Number of Students
-                        </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['Contact Center Services NC II']}}</p>
-                    </div>
-                </div>
-            </div>
+    <section class="cards-content  flex flex-row items-center justify-between px-11 py-14">
+        <div class="card-content text-center w-72 h-40 flex flex-col border-solid border-2 border-[#168753] rounded-md bg-[#fff] shadow-lg items-center justify-center">
+            <div class="font-extrabold text-6xl">{{$total_student}}</div>
+            <p class="text-2xl">Total students</p>
         </div>
-        <div class="flex flex-row gap-20 w-full">
-            <div class="h-[10rem] w-full rounded overflow-hidden shadow-lg flex  bg-gray-50 dark:bg-gray-800">
-                <div class="w-1/2 h-[20rem]">
-                    <img class="w-[15rem] h-[10rem]" src="/images/ani.png" alt="CONTACT CENTER SERVICES">
-                </div>
-                <div class="py-4 font-black">
-                    <h1 class="text-nolitcText text-2xl">
-                        ANIMATION
-                    </h1>
-                    <div class="mt-1">
-                        <h3 class="text-xl">
-                            Number of Students
-                        </h3>
-                         <p class="text-5xl font-black mt-1">{{$total_count['Animation NC II']}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="h-[10rem] w-full rounded overflow-hidden shadow-lg flex  bg-gray-50 dark:bg-gray-800">
-                <div class="w-1/2 h-[20rem]">
-                    <img class="w-[15rem] h-[10rem]" src="/images/2d-ani.png" alt="CONTACT CENTER SERVICES">
-                </div>
-                <div class="py-4 font-black">
-                    <h1 class="text-nolitcText text-2xl">
-                        2D ANIMATION
-                    </h1>
-                    <div class="mt-1">
-                        <h3 class="text-xl">
-                            Number of Students
-                        </h3>
-                        <p class="text-5xl font-black mt-1">{{$total_count['2D Animation NC III']}}</p>
-                    </div>
-                </div>
-            </div>
+        <div class="card-content text-center w-72 h-40 flex flex-col border-solid border-2 border-[#168753] rounded-md bg-[#fff] shadow-lg items-center justify-center">
+            <div class="font-extrabold text-6xl">{{$totalNewStudent}}</div>
+            <p class="text-2xl">New Students</p>
         </div>
-    </div>
+        <div class="card-content text-center w-72 h-40 flex flex-col border-solid border-2 border-[#168753] rounded-md bg-[#fff] shadow-lg items-center justify-center">
+            <div class="font-extrabold text-6xl">{{$total_pending}}</div>
+            <p class="text-2xl">Total Number of Pending Student</p>
+        </div>
+    </section>
+
+    <section class="chart-card-content">
+        <div class="chart w-full h-[40vh]">
+            <canvas id="myChart" height="3vh" width="13vw"></canvas>
+        </div>
+    </section>
+
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const d = new Date();
+    let name = month[d.getMonth()];
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {!!json_encode($labels)!!},
+        datasets: [{
+          label: `# of Accepted Students this ${name}`,
+          data:{{json_encode($values)}},
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
 @include('partials.footer')

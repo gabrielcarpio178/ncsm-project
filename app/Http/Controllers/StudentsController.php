@@ -8,6 +8,7 @@ use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\PusherBroadcast;
+use App\Models\Programs;
 
 class StudentsController extends Controller
 {
@@ -49,13 +50,13 @@ class StudentsController extends Controller
             'pcontact'=> 'required|numeric|digits:11',
             'classification'=> 'required|array|min:1',
         ]);
-        // dd($data);
-        return view('students.register_review',['data'=> $data]);
+        $programs = Programs::all();
+        return view('students.register_review',['data'=> $data, 'programs'=>$programs]);
     }
 
     public function submit_data(Request $request){
         $data = $request->validate([
-            "course"=> 'required',
+            "course"=> 'required|numeric',
             'lname'=> 'required',
             'fname'=> 'required',
             'mname'=> 'required',
@@ -91,7 +92,10 @@ class StudentsController extends Controller
              'classification'=> 'required|array|min:1',
          ]);
 
-         $student = ['course'=>$data['course'],'fname'=> strtolower($data['fname']), 'lname'=>strtolower($data['lname']), 'mname'=>strtolower($data['mname']), 'sname'=>strtolower($data['suffix']), 'street_number'=>$data['number-street'], 'city'=>$data['city-municipality'],'district'=>$data['district'],'zipcode'=>$data['zip'], 'email'=> $data['email'], 'gender'=>$data['gender'], 'civil_status'=>$data['civil-status'], 'employment'=>$data['employement'], 'birthdate'=>$data['birthdate'], 'nationality'=>$data['nationality'], 'contact_number'=>$data['contact-number'], 'birthplace'=>$data['birthplace-pcity-municipality'], 'education'=>$data['trainee']];
+
+        $student = ['id_course'=>(int)$data['course'],'fname'=> strtolower($data['fname']),'lname'=>strtolower($data['lname']), 'mname'=>strtolower($data['mname']), 'sname'=>strtolower($data['suffix']), 'street_number'=>$data['number-street'], 'city'=>$data['city-municipality'],'district'=>$data['district'],'zipcode'=>$data['zip'], 'email'=> $data['email'], 'gender'=>$data['gender'], 'civil_status'=>$data['civil-status'], 'employment'=>$data['employement'], 'birthdate'=>$data['birthdate'], 'nationality'=>$data['nationality'], 'contact_number'=>$data['contact-number'], 'birthplace'=>$data['birthplace-pcity-municipality'], 'education'=>$data['trainee']];
+
+
         Students::create($student);
         $lastest_id = DB::table('students')->latest('updated_at')->first();
         $parents = ['students_id'=>$lastest_id->id,'plname'=>$data['plname'], 'pfname'=>$data['pfname'], 'pmname'=>$data['pmname'],'psname'=>$data['psname'],'pcontact_number'=>$data['pcontact'], 'pstreet_number'=>$data['pnumber-street'], 'pmunicipality'=>$data['pcity-municipality'], 'pdistrict'=>$data['pdistrict'], 'pzipcode'=>$data['zip']];
@@ -101,6 +105,6 @@ class StudentsController extends Controller
             Classification::create($classification_data);
         }
         event(new PusherBroadcast('Applicant name: '.$student['fname']));
-        return view('students.register');
-    }
+        return redirect("/register");
+     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Programs;
 use App\Models\Students;
 use App\Models\User_info;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -33,26 +35,34 @@ class AuthUser extends Controller
         }
     }
     public function admin(){
-        $total_numbers = Students::all();
-        $total_numbers = DB::table('students')
-        ->select('course', DB::raw('count(*) as total'))
-        ->groupBy('course')
-        ->get();
-        $total_count = array();
-        $courses = ["Visual Graphic Design NCIII", "Animation NC II", "Contact Center Services NC II", "2D Animation NC III"];
+        $total_student = Students::count();
+        $totalNewStudent = Students::whereBetween('updated_at', [Carbon::now()->subDay(7),'NOW()'])->count();
+        $total_pending = Students::where('status','=',false)->count();
 
-        foreach($courses as $course){
-            foreach($total_numbers as $total_number){
-                if($course==$total_number->course){
-                    $total_count[$course] = $total_number->total;
-                    break;
-                }else{
-                    $total_count[$course] = 0;
-                }
+        //graph data
+        $data = Students::groupBy('id_course')->select(DB::raw('id_course, count(*) as total_count'))->whereMonth('created_at', Carbon::today()->month)->get();
+        $labels = array();
+        $values = array();
+
+        foreach($data as $id_course){
+            $program = Programs::where('id','=',$id_course->id_course)->first();
+            $values[] = $id_course->total_count;
+            $labels[] = $program->name;
+        }
+        $programs = Programs::all();
+        foreach($programs as $program){
+            if(!in_array($program->name, $labels)){
+                $labels[] =  $program->name;
+                $values[] = 0;
             }
         }
-
-        return view('pages.admin', ['total_count'=>$total_count])->with('success','Welcome Admin');
+        return view('pages.admin', [
+            'total_student'=>$total_student,
+            'totalNewStudent'=>$totalNewStudent,
+            'total_pending'=>$total_pending,
+            'values'=>$values,
+            'labels'=>$labels
+        ]);
     }
     public function staff(){
         return view('pages.staff')->with('success','Welcome Staff');

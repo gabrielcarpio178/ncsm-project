@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class NolitcController extends Controller
 {
+
+    function register_student(){
+        $programs = Programs::all();
+        return view("students.register", ["programs"=>$programs]);
+    }
     public function welcome(){
         return view("welcome");
     }

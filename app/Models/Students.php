@@ -11,7 +11,7 @@ class Students extends Model
     use HasFactory;
     protected $table = "students";
     protected $fillable = [
-        "course",
+        "id_course",
         "fname",
         "mname",
         "lname",
@@ -40,5 +40,10 @@ class Students extends Model
     public function classification(){
         return $this->hasMany(Classification::class);
     }
+
+    public function program(){
+        return $this->hasMany(Programs::class, 'id', 'id_course');
+    }
+
 
 }

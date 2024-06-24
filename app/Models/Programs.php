@@ -28,4 +28,8 @@ class Programs extends Model
         return $this->hasMany(Benefits::class);
     }
 
+    public function students(){
+        return $this->hasMany(Students::class);
+    }
+
 }
