@@ -1,64 +1,64 @@
 $(document).ready(()=>{
-  regions();
-  pregions();
-  birthplace_regions();
-  $(".txt, #region, .checkbox").each(function() {
-    $(this).change(function(){
-        var region = $('option:selected', this).attr('data-id');
-        province(region);
-    });
-  });
+//   regions();
+//   pregions();
+//   birthplace_regions();
+//   $(".txt, #region, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var region = $('option:selected', this).attr('data-id');
+//         // province(region);
+//     });
+//   });
 
-  $(".txt, #province, .checkbox").each(function() {
-    $(this).change(function(){
-        var muni = $('option:selected', this).attr('data-id');
-        city(muni);
-    });
-  });
+//   $(".txt, #province, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var muni = $('option:selected', this).attr('data-id');
+//         // city(muni);
+//     });
+//   });
 
-  $(".txt, #muni, .checkbox").each(function() {
-    $(this).change(function(){
-        var city = $('option:selected', this).attr('data-id');
-        district(city);
-    });
-  });
+//   $(".txt, #muni, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var city = $('option:selected', this).attr('data-id');
+//         // district(city);
+//     });
+//   });
 
-  $(".txt, #pregion, .checkbox").each(function() {
-    $(this).change(function(){
-        var region = $('option:selected', this).attr('data-id');
-        pprovince(region);
-    });
-  });
+//   $(".txt, #pregion, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var region = $('option:selected', this).attr('data-id');
+//         // pprovince(region);
+//     });
+//   });
 
-  $(".txt, #pprovince, .checkbox").each(function() {
-    $(this).change(function(){
-        var muni = $('option:selected', this).attr('data-id');
-        pcity(muni);
-    });
-  });
+//   $(".txt, #pprovince, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var muni = $('option:selected', this).attr('data-id');
+//         // pcity(muni);
+//     });
+//   });
 
-  $(".txt, #pmuni, .checkbox").each(function() {
-    $(this).change(function(){
-        var city = $('option:selected', this).attr('data-id');
-        pdistrict(city);
-    });
-  });
+//   $(".txt, #pmuni, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var city = $('option:selected', this).attr('data-id');
+//         // pdistrict(city);
+//     });
+//   });
 
-  $(".txt, #birthplace-region, .checkbox").each(function() {
-    $(this).change(function(){
-        var region = $('option:selected', this).attr('data-id');
-        birthplace_province_select(region);
-    });
-  });
+//   $(".txt, #birthplace-region, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var region = $('option:selected', this).attr('data-id');
+//         // birthplace_province_select(region);
+//     });
+//   });
 
-  $(".txt, #birthplace-province, .checkbox").each(function() {
-    $(this).change(function(){
-        var muni = $('option:selected', this).attr('data-id');
-        birthplace_city(muni);
-    });
-  });
+//   $(".txt, #birthplace-province, .checkbox").each(function() {
+//     $(this).change(function(){
+//         var muni = $('option:selected', this).attr('data-id');
+//         // birthplace_city(muni);
+//     });
+//   });
 
-  iscroll();
+//   iscroll();
 
 })
 

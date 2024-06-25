@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('course');
+            $table->string('id_course');
+            $table->foreign('id_course')->references('id')->on('programs')->onDelete('cascade');
             $table->string('fname');
             $table->string('mname');
             $table->string('lname');

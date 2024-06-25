@@ -18,7 +18,9 @@ use App\Models\Qualifications;
 use App\Models\ScoreCard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use App\Exports\StudentsExport;
+use App\Exports\FilterExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -33,34 +35,43 @@ class AdminController extends Controller
 
     public function register_student(){
         $students = Students::orderBy('id', 'desc')->paginate(10);
-        return view("pages.adminRegisterStudent", ['students'=>$students]);
+        $programs = Programs::all();
+        return view("pages.adminRegisterStudent", ['students'=>$students, 'programs'=>$programs, 'isAll'=>true]);
     }
 
 
 
-    public function gotoApplicant(){
-        $students = Students::where('status','=','FALSE')->orderBy('id', 'desc')->paginate(10);
-        return view('pages.adminapplicant', ['students'=>$students]);
-    }
 
-
-
-    public function search_register(Request $request){
-        $request->validate([
-            'search'=> ['required'],
+    public function filter(Request $request){
+        $filter = $request->validate([
+            'course'=>['required'],
+            'status'=>['required'],
+            'start_date'=>['required','date'],
+            'end_date'=>['required', 'date']
         ]);
-        $students = Students::where('fname','LIKE','%'.strtolower($request->search).'%')->orWhere('lname','LIKE','%'.strtolower($request->search).'%')->orWhere('mname','LIKE','%'.strtolower($request->search).'%')->paginate(10);
-        return view("pages.adminapplicant", ['students'=>$students]);
+        $start_date = date('Y-m-d H:i:s',strtotime($filter['start_date']));
+        $end_date = date('Y-m-d H:i:s',strtotime($filter['end_date']));
+        $students = Students::where('id_course','=',$filter['course'])->where('status','=',(bool)$filter['status'])->whereBetween('created_at',[$start_date, $end_date])->paginate(10);
+        $programs = Programs::all();
+        return view("pages.adminRegisterStudent", ['students'=>$students, 'programs'=>$programs, 'isAll'=>false, 'filter'=>['id_course'=>$filter['course'], 'status'=>$filter['status'], 'start_date'=> $filter['start_date'], 'end_date'=>$filter['end_date']]]);
     }
 
-    public function show($id)
-    {
+    function export(Request $request){
 
-        $selectedStudent = Students::where('course','=',$id);
-        print_r($selectedStudent);
-        // return response()->json(['student' => $selectedStudent]);
+        $start_date = date('Y-m-d H:i:s',strtotime($request->start_date));
+        $end_date = date('Y-m-d H:i:s',strtotime($request->end_date));
+        $fileExt = 'xls';
+        $exportFormat = \Maatwebsite\Excel\Excel::XLS;
+        $filename = "nolitc-exported-data".date('d-m-Y').".".$fileExt;
+
+        return Excel::download(new FilterExport($request->course, $request->status, $start_date, $end_date), $filename, $exportFormat);
     }
-
+    function export_excel(){
+        $fileExt = 'xls';
+        $exportFormat = \Maatwebsite\Excel\Excel::XLS;
+        $filename = "nolitc-exported-data".date('d-m-Y').".".$fileExt;
+        return Excel::download(new StudentsExport, $filename, $exportFormat);
+    }
 
     public function update(Request $request, $id){
         $data = $request->validate([

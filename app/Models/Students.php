@@ -42,7 +42,7 @@ class Students extends Model
     }
 
     public function program(){
-        return $this->hasMany(Programs::class, 'id', 'id_course');
+        return $this->hasOne(Programs::class, 'id', 'id_course');
     }
 
 

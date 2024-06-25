@@ -15,10 +15,6 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
         getNumber(parseInt({{$total_numbers}})+1);
-        let isYes = confirm(data.message);
-        if(isYes){
-            window.location.href = '{{route('applicant_admin')}}'
-        }
     });
 
     function getNumber(total_number){

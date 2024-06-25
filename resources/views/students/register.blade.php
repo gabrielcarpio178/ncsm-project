@@ -113,7 +113,10 @@
             <div class="input-data">
               <label for="region" class="label-input-tag">Region  *</label>
               <select id="region" name="region" class="region">
-                <option value="" selected>Selected Region</option>
+                <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
+                <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
+                <option value="Central Luzon" data-id="030000000" selected>Region III</option>
+                <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
               </select>
               @error('region')
               <p class="error">{{$message}}</p>
@@ -123,6 +126,8 @@
               <label for="province" class="label-input-tag">Province *</label>
               <select id="province" name="province" class="province">
                 <option value="" selected disabled>Select Province</option>
+                <option value="Aklan" data-id="060400000">Aklan</option>
+                <option value="Antique" data-id="060600000">Antique</option>
               </select>
               @error('province')
               <p class="error">{{$message}}</p>
@@ -132,6 +137,8 @@
               <label for="muni" class="label-input-tag">City/Municipality *</label>
               <select id="muni" name="city-municipality" class="city-municipality">
                 <option value="" selected disabled>Select City/Municapility</option>
+                <option value="Anini-Y" data-id="060601000">Anini-Y</option>
+                <option value="Barbaza" data-id="060602000">Barbaza</option>
               </select>
               @error('city-municipality')
               <p class="error">{{$message}}</p>
@@ -140,7 +147,10 @@
             <div class="input-data">
               <label for="dist" class="label-input-tag">District *</label>
               <select id="dist" name="district" class="district">
-                <option value="none" selected id="selected_zip">Select Districts</option>
+                <option value="First District" data-id="133900000">First District</option>
+                <option value="Second District" data-id="137400000">Second District</option>
+                <option value="Third District" data-id="137500000">Third District</option>
+                <option value="Fourth District" data-id="137600000">Fourth District</option>
               </select>
               @error('district')
               <p class="error">{{$message}}</p>
@@ -274,6 +284,10 @@
               <label for="birthplace-region" class="label-input-tag">Region  *</label>
               <select id="birthplace-region" name="birthplace-region" class="region">
                 <option value="" selected>Selected Region</option>
+                <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
+                <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
+                <option value="Central Luzon" data-id="030000000" selected>Region III</option>
+                <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
               </select>
               @error('birthplace-region')
               <p class="error">{{$message}}</p>
@@ -283,6 +297,8 @@
                 <label for="birthplace-province" class="label-input-tag">Province *</label>
                 <select id="birthplace-province" name="birthplace-province" class="province">
                     <option value="" selected>Selected province</option>
+                    <option value="Aklan" data-id="060400000">Aklan</option>
+                    <option value="Antique" data-id="060600000">Antique</option>
                 </select>
                 @error('birthplace-province')
                 <p class="error">{{$message}}</p>
@@ -292,6 +308,10 @@
               <label for="birthplace-pmuni" class="label-input-tag">City/Municipality *</label>
               <select id="birthplace-pmuni" name="birthplace-pcity-municipality" class="city-municipality">
                 <option value="" selected disabled>Select City/Municapility</option>
+                <option value="First District" data-id="133900000">First District</option>
+                <option value="Second District" data-id="137400000">Second District</option>
+                <option value="Third District" data-id="137500000">Third District</option>
+                <option value="Fourth District" data-id="137600000">Fourth District</option>
               </select>
               @error('birthplace-pcity-municipality')
               <p class="error">{{$message}}</p>
@@ -422,6 +442,10 @@
                 <label for="region" class="label-input-tag">Region  *</label>
                 <select id="pregion" name="pregion" class="pregion">
                     <option value="" selected>Selected Region</option>
+                    <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
+                    <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
+                    <option value="Central Luzon" data-id="030000000" selected>Region III</option>
+                    <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
                 </select>
                 @error('pregion')
                 <p class="error">{{$message}}</p>
@@ -431,6 +455,8 @@
                 <label for="pprovince" class="label-input-tag">Province *</label>
                 <select id="pprovince" name="pprovince" class="province">
                     <option value="" selected disabled>Select Province</option>
+                    <option value="Aklan" data-id="060400000">Aklan</option>
+                    <option value="Antique" data-id="060600000">Antique</option>
                 </select>
                 @error('pprovince')
                 <p class="error">{{$message}}</p>
@@ -440,6 +466,8 @@
                 <label for="pmuni" class="label-input-tag">City/Municipality *</label>
                 <select id="pmuni" name="pcity-municipality" class="city-municipality">
                     <option value="" selected disabled>Select City/Municapility</option>
+                    <option value="Aklan" data-id="060400000">Aklan</option>
+                    <option value="Antique" data-id="060600000">Antique</option>
                 </select>
                 @error('pcity-municipality')
                 <p class="error">{{$message}}</p>
@@ -449,6 +477,10 @@
                 <label for="pdist" class="label-input-tag">District *</label>
                 <select id="pdist" name="pdistrict" class="district">
                     <option value="none" selected id="selected_zip">Select Districts</option>
+                    <option value="First District" data-id="133900000">First District</option>
+                    <option value="Second District" data-id="137400000">Second District</option>
+                    <option value="Third District" data-id="137500000">Third District</option>
+                    <option value="Fourth District" data-id="137600000">Fourth District</option>
                 </select>
                 @error('pdistrict')
                 <p class="error">{{$message}}</p>

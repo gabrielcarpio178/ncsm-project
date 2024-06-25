@@ -15,7 +15,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/search/applicant','search_applicant')->name('search.applicant');
         Route::post('/search/register','search_register')->name('search.registers');
         Route::get('/student_profile/{id}','student_profile')->name('student_profile');
-        Route::get('/applicant','gotoApplicant')->name('applicant_admin');
         Route::get('/filter/applicant/{course}','filter_applicant')->name('filter_applicant');
         Route::post('/delete-aplicant','deleteApplicant')->name('delete.applicant');
         Route::put('/accept-aplicant','acceptApplicant')->name('accept.applicant');
@@ -31,8 +30,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/program/program/upadate.content/{id}','updateContent_program')->name('updateContent_program');
         Route::delete('/program/delete','delete_program')->name('delete.programs');
         Route::get('/scorecards','showScoreCard')->name('showScoreCard');
-        // Route::get('/register-student', 'studentInfo')->name('pages.adminRegisterStudent');
+        Route::post('/export','export')->name('export');
+        Route::get('/export', 'export_excel')->name('export_excel');
         Route::get('/register-student', 'register_student')->name('register_admin');
+        Route::post('/register-student', 'filter')->name('filter');
         Route::get('/students/{id}', 'filter_show')->name('students.show');
         // Route::get('/register-student', 'studentInfo')->name('pages.adminRegisterStudent');
     });
