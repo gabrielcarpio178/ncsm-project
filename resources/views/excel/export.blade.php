@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Course</th>
             <th>Contact Number</th>
+            
             <th>Email</th>
             <th>Date</th>
             <th>Status</th>
