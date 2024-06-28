@@ -1,7 +1,7 @@
 @include('partials.header', ['title'=> 'TESDA QUALIFICATIONS ADD'])
 
 <x-adminHeader></x-adminHeader>
-<x-adminSidebar></x-adminSidebar>
+<x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 <x-alertmessage></x-alertmessage>
 <main class="w-[86.6%] absolute top-40 left-64 p-10">
     <div>
