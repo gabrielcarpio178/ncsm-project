@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('lname');
             $table->string('sname')->nullable();
             $table->string('street_number');
+            $table->string('region');
+            $table->string('province');
             $table->string('city');
             $table->string('district');
             $table->unsignedInteger('zipcode');

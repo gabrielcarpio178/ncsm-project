@@ -93,7 +93,7 @@ class StudentsController extends Controller
          ]);
 
 
-        $student = ['id_course'=>(int)$data['course'],'fname'=> strtolower($data['fname']),'lname'=>strtolower($data['lname']), 'mname'=>strtolower($data['mname']), 'sname'=>strtolower($data['suffix']), 'street_number'=>$data['number-street'], 'city'=>$data['city-municipality'],'district'=>$data['district'],'zipcode'=>$data['zip'], 'email'=> $data['email'], 'gender'=>$data['gender'], 'civil_status'=>$data['civil-status'], 'employment'=>$data['employement'], 'birthdate'=>$data['birthdate'], 'nationality'=>$data['nationality'], 'contact_number'=>$data['contact-number'], 'birthplace'=>$data['birthplace-pcity-municipality'], 'education'=>$data['trainee']];
+        $student = ['id_course'=>(int)$data['course'],'fname'=> strtolower($data['fname']),'lname'=>strtolower($data['lname']), 'mname'=>strtolower($data['mname']), 'sname'=>strtolower($data['suffix']), 'street_number'=>$data['number-street'], 'city'=>$data['city-municipality'],'district'=>$data['district'],'zipcode'=>$data['zip'], 'email'=> $data['email'], 'gender'=>$data['gender'], 'civil_status'=>$data['civil-status'], 'employment'=>$data['employement'], 'birthdate'=>$data['birthdate'], 'nationality'=>$data['nationality'], 'contact_number'=>$data['contact-number'], 'birthplace'=>$data['birthplace-pcity-municipality'], 'education'=>$data['trainee'], 'region'=>$data['region'], 'province'=>$data['province']];
 
 
         Students::create($student);
@@ -105,6 +105,6 @@ class StudentsController extends Controller
             Classification::create($classification_data);
         }
         event(new PusherBroadcast('Applicant name: '.$student['fname']));
-        return redirect("/register");
+        return redirect("/thank_you");
      }
 }

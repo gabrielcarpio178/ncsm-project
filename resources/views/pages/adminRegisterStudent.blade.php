@@ -3,7 +3,7 @@
 <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script></script>
 
 <x-adminHeader></x-adminHeader>
-<x-adminSidebar></x-adminSidebar>
+<x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 <main class="w-[86.6%] absolute top-40 left-64 p-10">
     <div class="text-2xl font-black text-[#168753]">
         Registered Student

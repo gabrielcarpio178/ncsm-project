@@ -195,6 +195,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'course_name'=> 'required',
             'hours'=> 'required|numeric',
+            'exampleLink'=>'required',
             'course_caption'=> 'required',
             'qualification'=> 'required|array',
             'benefits'=> 'required|array',
@@ -207,6 +208,7 @@ class AdminController extends Controller
 
        Programs::create([
         'name'=> $data['course_name'],
+        'exam_link'=> $data['exampleLink'],
         'hours'=> $data['hours'],
         'caption'=> $data['course_caption'],
         'img_name' => $database,
@@ -235,7 +237,6 @@ class AdminController extends Controller
             ]);
        }
 
-       //return $this->programs_addform();
        return redirect('program-management/form')->with('success','Add Success');
 
     }
@@ -254,6 +255,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'course_name'=> 'required',
             'hours'=> 'required|numeric',
+            'exampleLink'=>'required',
             'course_caption'=> 'required',
             'qualification'=> 'required|array',
             'benefits'=> 'required|array',
@@ -262,7 +264,7 @@ class AdminController extends Controller
         ]);
 
         $program = Programs::find($id);
-
+        $program->exam_link = $data['exampleLink'];
         $program->name = $data['course_name'];
         $program->hours = $data['hours'];
         $program->caption = $data['course_caption'];

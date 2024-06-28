@@ -65,6 +65,7 @@ Route::controller(NolitcController::class)->group(function () {
     Route::get("/ccs","ccs")->name("ccs");
     Route::get("/know-more","know_more")->name("know_more");
     Route::get("/register", "register_student")->name("register.student");
+    Route::get("/thank_you", "thank_page")->name("thank_page.student");
 });
 
 

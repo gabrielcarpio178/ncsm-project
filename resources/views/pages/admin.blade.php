@@ -1,7 +1,7 @@
 @include('partials.header', ['title'=> 'Dashboard'])
 
 <x-adminHeader></x-adminHeader>
-<x-adminSidebar></x-adminSidebar>
+<x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 <x-message></x-message>
 {{-- @dd($total_count) --}}
 <main class="w-[86.6%] absolute top-[14%] left-64 p-10">
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="rounded-md shadow-lg bg-slate-100 w-[30vw] h-[100%] flex flex-col p-3">
-                <h2 class="font-bold text-xl">Student by Monthly</h2>
+                <h2 class="font-bold text-xl">Applicants by Month</h2>
                 <div class="graph w-[100%] h-[90%] flex flex-row items-center justify-center">
                     <canvas id="pie"></canvas>
                 </div>
@@ -110,23 +110,14 @@
     });
     //pie
 
-    var monthly_month = {!!json_encode($monthly_month)!!};
-    var monthly_male = {!!json_encode($monthly_male)!!};
-    var monthly_female = {!!json_encode($monthly_female)!!};
-    console.log(monthly_month);
-    console.log(monthly_male);
-    console.log(monthly_female);
     const pie = document.getElementById('pie').getContext('2d');
     const chart_pie = new Chart(pie, {
         type: 'line',
         data: {
-            labels: ['A', 'B', 'C'],
+            labels: {!!json_encode($data_month_labels)!!},
             datasets: [{
-                label: 'Male',
-                data: [1, 2, 3],
-            },{
-                label: 'Female',
-                data: [4, 5, 6],
+                label: 'Applicants',
+                data: {!!json_encode($data_month_values)!!},
             }],
         },
         options: {

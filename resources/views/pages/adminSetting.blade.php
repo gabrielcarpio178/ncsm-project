@@ -1,6 +1,6 @@
 @include('partials.header', ['title'=> 'Account Settings'])
 <x-adminHeader></x-adminHeader>
-<x-adminSidebar></x-adminSidebar>
+<x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 <section class="bg-green-100 w-[86.6%] absolute top-40 left-64 p-10">
     <x-alertmessage></x-alertmessage>
     <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:px-10 xl:py-[0.1%] dark:bg-gray-800 dark:border-gray-700 relative mx-auto">

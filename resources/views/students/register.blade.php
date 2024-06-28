@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/x-icon" href="../images/nolitc.png">
   <title>Registration Form</title>
 </head>
 <body>
+    @include('students.privacy')
   <header>
     <div class="header-content">
         <div class="text-logo-img">
@@ -104,53 +106,52 @@
           <h3>Complete Permanent Mailing Address</h3>
           <div class="content-info">
             <div class="input-data">
-              <label for="number-street" class="label-input-tag">Number, Street *</label>
-              <input type="text" id="number-street" name="number-street" placeholder="Number, Street" value="{{old('number-street')}}">
-              @error('number-street')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="region" class="label-input-tag">Region  *</label>
+                <select id="region" name="region" class="region">
+                    <option value='' selected disabled>Select region</option>
+                </select>
+                @error('region')
+                <p class="error">{{$message}}</p>
+                @enderror
             </div>
             <div class="input-data">
-              <label for="region" class="label-input-tag">Region  *</label>
-              <select id="region" name="region" class="region">
-                <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
-                <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
-                <option value="Central Luzon" data-id="030000000" selected>Region III</option>
-                <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
-              </select>
-              @error('region')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="province" class="label-input-tag">Province *</label>
+                <select id="province" name="province" class="province" disabled>
+                    <option value='' selected>Select Province</option>
+                </select>
+                @error('province')
+                <p class="error">{{$message}}</p>
+                @enderror
             </div>
             <div class="input-data">
-              <label for="province" class="label-input-tag">Province *</label>
-              <select id="province" name="province" class="province">
-                <option value="" selected disabled>Select Province</option>
-                <option value="Aklan" data-id="060400000">Aklan</option>
-                <option value="Antique" data-id="060600000">Antique</option>
-              </select>
-              @error('province')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="muni" class="label-input-tag">City/Municipality *</label>
+                <select id="muni" name="city-municipality" class="city-municipality" disabled>
+                    <option value='' selected>Select City/Municipality</option>
+                </select>
+                @error('city-municipality')
+                <p class="error">{{$message}}</p>
+                @enderror
+
             </div>
             <div class="input-data">
-              <label for="muni" class="label-input-tag">City/Municipality *</label>
-              <select id="muni" name="city-municipality" class="city-municipality">
-                <option value="" selected disabled>Select City/Municapility</option>
-                <option value="Anini-Y" data-id="060601000">Anini-Y</option>
-                <option value="Barbaza" data-id="060602000">Barbaza</option>
-              </select>
-              @error('city-municipality')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="number-street" class="label-input-tag">Number, Street *</label>
+
+                <input type="text" list="number-street" name="number-street" placeholder="Number, Street" value="{{old('number-street')}}">
+                <datalist id="number-street">
+
+                </datalist>
+                @error('number-street')
+                <p class="error">{{$message}}</p>
+                @enderror
             </div>
             <div class="input-data">
               <label for="dist" class="label-input-tag">District *</label>
               <select id="dist" name="district" class="district">
-                <option value="First District" data-id="133900000">First District</option>
-                <option value="Second District" data-id="137400000">Second District</option>
-                <option value="Third District" data-id="137500000">Third District</option>
-                <option value="Fourth District" data-id="137600000">Fourth District</option>
+                <option value="" selected disabled>Select District</option>
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="3rd">3rd</option>
+                <option value="4th">4th</option>
               </select>
               @error('district')
               <p class="error">{{$message}}</p>
@@ -281,41 +282,31 @@
           <h3>Birthplace</h3>
           <div class="content-info">
             <div class="input-data">
-              <label for="birthplace-region" class="label-input-tag">Region  *</label>
-              <select id="birthplace-region" name="birthplace-region" class="region">
-                <option value="" selected>Selected Region</option>
-                <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
-                <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
-                <option value="Central Luzon" data-id="030000000" selected>Region III</option>
-                <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
-              </select>
-              @error('birthplace-region')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="birthplace-region" class="label-input-tag">Region  *</label>
+                <select id="birthplace-region" name="birthplace-region" class="region">
+                    <option value='' selected disabled>Select region</option>
+                </select>
+                @error('birthplace-region')
+                <p class="error">{{$message}}</p>
+                @enderror
             </div>
             <div class="input-data">
                 <label for="birthplace-province" class="label-input-tag">Province *</label>
-                <select id="birthplace-province" name="birthplace-province" class="province">
-                    <option value="" selected>Selected province</option>
-                    <option value="Aklan" data-id="060400000">Aklan</option>
-                    <option value="Antique" data-id="060600000">Antique</option>
+                <select id="birthplace-province" name="birthplace-province" class="province" disabled>
+                    <option value='' selected disabled>Select Province</option>
                 </select>
                 @error('birthplace-province')
                 <p class="error">{{$message}}</p>
                 @enderror
             </div>
             <div class="input-data">
-              <label for="birthplace-pmuni" class="label-input-tag">City/Municipality *</label>
-              <select id="birthplace-pmuni" name="birthplace-pcity-municipality" class="city-municipality">
-                <option value="" selected disabled>Select City/Municapility</option>
-                <option value="First District" data-id="133900000">First District</option>
-                <option value="Second District" data-id="137400000">Second District</option>
-                <option value="Third District" data-id="137500000">Third District</option>
-                <option value="Fourth District" data-id="137600000">Fourth District</option>
-              </select>
-              @error('birthplace-pcity-municipality')
-              <p class="error">{{$message}}</p>
-              @enderror
+            <label for="birthplace-pmuni" class="label-input-tag">City/Municipality *</label>
+            <select id="birthplace-pmuni" name="birthplace-pcity-municipality" class="city-municipality" disabled>
+                <option value='' selected>Select City</option>
+            </select>
+            @error('birthplace-pcity-municipality')
+            <p class="error">{{$message}}</p>
+            @enderror
             </div>
           </div>
 
@@ -432,55 +423,52 @@
             <h3>Complete Permanent Mailing Address</h3>
             <div class="content-info">
                 <div class="input-data">
-                <label for="pnumber-street" class="label-input-tag">Number, Street *</label>
-                <input type="text" id="pnumber-street" name="pnumber-street" placeholder="Number, Street" value="{{old('pnumber-street')}}">
-                @error('pnumber-street')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pregion" class="label-input-tag">Region  *</label>
+                    <select id="pregion" name="pregion" class="pregion">
+                        <option value='' selected disabled>Select region</option>
+                    </select>
+                    @error('pregion')
+                    <p class="error">{{$message}}</p>
+                    @enderror
+
                 </div>
                 <div class="input-data">
-                <label for="region" class="label-input-tag">Region  *</label>
-                <select id="pregion" name="pregion" class="pregion">
-                    <option value="" selected>Selected Region</option>
-                    <option value="Ilocos Region" data-id="010000000" selected>Region I</option>
-                    <option value="Cagayan Valley" data-id="020000000" selected>Region II</option>
-                    <option value="Central Luzon" data-id="030000000" selected>Region III</option>
-                    <option value="Cagayan Valley" data-id="040000000" selected>Region IV</option>
-                </select>
-                @error('pregion')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pprovince" class="label-input-tag">Province *</label>
+                    <select id="pprovince" name="pprovince" class="province" disabled>
+                        <option value='' selected disabled>Select Province</option>
+                    </select>
+                    @error('pprovince')
+                    <p class="error">{{$message}}</p>
+                    @enderror
+
                 </div>
                 <div class="input-data">
-                <label for="pprovince" class="label-input-tag">Province *</label>
-                <select id="pprovince" name="pprovince" class="province">
-                    <option value="" selected disabled>Select Province</option>
-                    <option value="Aklan" data-id="060400000">Aklan</option>
-                    <option value="Antique" data-id="060600000">Antique</option>
-                </select>
-                @error('pprovince')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pmuni" class="label-input-tag">City/Municipality *</label>
+                    <select id="pmuni" name="pcity-municipality" class="city-municipality" disabled>
+                        <option value='' selected>Select City/Municipality</option>
+                    </select>
+                    @error('pcity-municipality')
+                    <p class="error">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="input-data">
-                <label for="pmuni" class="label-input-tag">City/Municipality *</label>
-                <select id="pmuni" name="pcity-municipality" class="city-municipality">
-                    <option value="" selected disabled>Select City/Municapility</option>
-                    <option value="Aklan" data-id="060400000">Aklan</option>
-                    <option value="Antique" data-id="060600000">Antique</option>
-                </select>
-                @error('pcity-municipality')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pnumber-street" class="label-input-tag">Number, Street *</label>
+                    <input type="text" list="pnumber-street" name="pnumber-street" placeholder="Number, Street" value="{{old('pnumber-street')}}">
+                    <datalist id="pnumber-street">
+
+                    </datalist>
+                    @error('pnumber-street')
+                    <p class="error">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="input-data">
                 <label for="pdist" class="label-input-tag">District *</label>
                 <select id="pdist" name="pdistrict" class="district">
-                    <option value="none" selected id="selected_zip">Select Districts</option>
-                    <option value="First District" data-id="133900000">First District</option>
-                    <option value="Second District" data-id="137400000">Second District</option>
-                    <option value="Third District" data-id="137500000">Third District</option>
-                    <option value="Fourth District" data-id="137600000">Fourth District</option>
+                    <option value="" selected disabled>Select District</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
                 </select>
                 @error('pdistrict')
                 <p class="error">{{$message}}</p>
@@ -693,5 +681,8 @@
     </div>
   </footer>
   <script src="js/register.js"></script>
+  <script>
+     document.getElementById('id01').style.display='block';
+  </script>
 </body>
 </html>

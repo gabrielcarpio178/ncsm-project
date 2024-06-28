@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="icon" type="image/x-icon" href="../images/nolitc.png">
   <title>Registration Form Review</title>
 </head>
 <body>
@@ -108,13 +109,7 @@
           <h3>Complete Permanent Mailing Address</h3>
           <div class="content-info">
             <div class="input-data">
-              <label for="number-street" class="label-input-tag">Number, Street *</label>
-              <input type="text" id="number-street" name="number-street" placeholder="Number, Street" value="{{$data['number-street']}}" disabled>
-              @error('number-street')
-              <p class="error">{{$message}}</p>
-              @enderror
-            </div>
-            <div class="input-data">
+
               <label for="region" class="label-input-tag">Region  *</label>
               <select id="region" name="region" class="region" disabled>
                 <option value="{{$data['region']}}" selected>{{$data['region']}}</option>
@@ -122,24 +117,36 @@
               @error('region')
               <p class="error">{{$message}}</p>
               @enderror
+
             </div>
             <div class="input-data">
-              <label for="province" class="label-input-tag">Province *</label>
-              <select id="province" name="province" class="province" disabled>
-                <option value="{{$data['province']}}" selected>{{$data['province']}}</option>
-              </select>
-              @error('province')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="province" class="label-input-tag">Province *</label>
+                <select id="province" name="province" class="province" disabled>
+                    <option value="{{$data['province']}}" selected>{{$data['province']}}</option>
+                </select>
+                @error('province')
+                <p class="error">{{$message}}</p>
+                @enderror
             </div>
             <div class="input-data">
-              <label for="muni" class="label-input-tag">City/Municipality *</label>
-              <select id="muni" name="city-municipality" class="city-municipality" disabled>
-                <option value="{{$data['city-municipality']}}" selected>{{$data['city-municipality']}}</option>
-              </select>
-              @error('city-municipality')
-              <p class="error">{{$message}}</p>
-              @enderror
+                <label for="muni" class="label-input-tag">City/Municipality *</label>
+                <select id="muni" name="city-municipality" class="city-municipality" disabled>
+                  <option value="{{$data['city-municipality']}}" selected>{{$data['city-municipality']}}</option>
+                </select>
+                @error('city-municipality')
+                <p class="error">{{$message}}</p>
+                @enderror
+            </div>
+            <div class="input-data">
+                <label for="number-street" class="label-input-tag">Number, Street *</label>
+                <input type="text" list="number-street" name="number-street" placeholder="Number, Street" value="{{$data['number-street']}}" disabled>
+                <datalist id="number-street">
+
+                </datalist>
+                @error('number-street')
+                <p class="error">{{$message}}</p>
+                @enderror
+
             </div>
             <div class="input-data">
               <label for="dist" class="label-input-tag">District *</label>
@@ -417,47 +424,52 @@
             <h3>Complete Permanent Mailing Address</h3>
             <div class="content-info">
                 <div class="input-data">
-                <label for="pnumber-street" class="label-input-tag">Number, Street *</label>
-                <input type="text" id="pnumber-street" name="pnumber-street" placeholder="Number, Street" value="{{$data['pnumber-street']}}" disabled>
-                @error('pnumber-street')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="region" class="label-input-tag">Region  *</label>
+                    <select id="pregion" name="pregion" class="pregion" disabled>
+                        <option value="{{$data['pregion']}}" selected>{{$data['pregion']}}</option>
+                    </select>
+                    @error('pregion')
+                    <p class="error">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="input-data">
-                <label for="region" class="label-input-tag">Region  *</label>
-                <select id="pregion" name="pregion" class="pregion" disabled>
-                    <option value="{{$data['pregion']}}" selected>{{$data['pregion']}}</option>
-                </select>
-                @error('pregion')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pprovince" class="label-input-tag">Province *</label>
+                    <select id="pprovince" name="pprovince" class="province" disabled>
+                        <option value="{{$data['pprovince']}}" selected>{{$data['pprovince']}}</option>
+                    </select>
+                    @error('pprovince')
+                    <p class="error">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="input-data">
-                <label for="pprovince" class="label-input-tag">Province *</label>
-                <select id="pprovince" name="pprovince" class="province" disabled>
-                    <option value="{{$data['pprovince']}}" selected>{{$data['pprovince']}}</option>
-                </select>
-                @error('pprovince')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pmuni" class="label-input-tag">City/Municipality *</label>
+                    <select id="pmuni" name="pcity-municipality" class="city-municipality" disabled>
+                        <option value="{{$data['pcity-municipality']}}" selected>{{$data['pcity-municipality']}}</option>
+                    </select>
+                    @error('pcity-municipality')
+                    <p class="error">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="input-data">
-                <label for="pmuni" class="label-input-tag">City/Municipality *</label>
-                <select id="pmuni" name="pcity-municipality" class="city-municipality" disabled>
-                    <option value="{{$data['pcity-municipality']}}" selected>{{$data['pcity-municipality']}}</option>
-                </select>
-                @error('pcity-municipality')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pnumber-street" class="label-input-tag">Number, Street *</label>
+                    <input type="text" list="pnumber-street" name="pnumber-street" placeholder="Number, Street" value="{{$data['pnumber-street']}}" disabled>
+                    <datalist id="pnumber-street">
+
+                    </datalist>
+                    @error('pnumber-street')
+                    <p class="error">{{$message}}</p>
+                    @enderror
+
                 </div>
                 <div class="input-data">
-                <label for="pdist" class="label-input-tag">District *</label>
-                <select id="pdist" name="pdistrict" class="district" disabled>
-                    <option value="{{$data['pdistrict']}}" selected id="pselected_zip">{{$data['pdistrict']}}</option>
-                </select>
-                @error('pdistrict')
-                <p class="error">{{$message}}</p>
-                @enderror
+                    <label for="pdist" class="label-input-tag">District *</label>
+                    <select id="pdist" name="pdistrict" class="district" disabled>
+                        <option value="{{$data['pdistrict']}}" selected id="pselected_zip">{{$data['pdistrict']}}</option>
+                    </select>
+                    @error('pdistrict')
+                    <p class="error">{{$message}}</p>
+                    @enderror
+
                 </div>
                 <div class="input-data">
                     <label for="pzip" class="label-input-tag">Zip *</label>

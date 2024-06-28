@@ -23,6 +23,13 @@
                     @enderror
                 </div>
             </div>
+            <div class="w-1/2 flex flex-col">
+                <label for="exampleLink" class="text-2xl align-top">Example Link:</label>
+                <textarea name="exampleLink" id="exampleLink" cols="80" rows="10" class="h-[150px]">{{$program->exam_link}}</textarea>
+                @error('exampleLink')
+                    <p class="text-red-500">Required</p>
+                @enderror
+            </div>
             <div class="inline-block w-1/2">
                 <label for="course_caption" class="text-2xl align-top">Course Captions:</label>
                 <textarea name="course_caption" id="course_caption" cols="80" rows="10" class="h-[150px]">{{$program->caption}}</textarea>

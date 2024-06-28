@@ -1,6 +1,6 @@
 @include('partials.header', ['title'=> $student->fname])
 <x-adminHeader></x-adminHeader>
-<x-adminSidebar></x-adminSidebar>
+<x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 <main class="w-[86.6%] absolute top-40 left-64 p-20 flex flex-col gap-y-8 z-0">
     <div class="flex justify-between mx-40">
         @if ($student->status===true)

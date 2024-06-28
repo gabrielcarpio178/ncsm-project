@@ -80,20 +80,30 @@ class AuthUser extends Controller
         }
         $labels_age_key = array_keys($values_age_array);
 
-        $monthly_reports = Students::groupBy('gender','created_month')->select(DB::raw("gender, count(*) AS total_student, extract(month from created_at) as created_month"))->get();
-        $monthly_month = array();
-        $monthly_male = array();
-        $monthly_female = array();
-        foreach($monthly_reports as $monthly_report){
-            if(!in_array($monthly_report->created_month,$monthly_month)){
-                $monthly_month[] = (int)$monthly_report->created_month;
-            }
-            if($monthly_report->gender==='Male'){
-                $monthly_male[$monthly_report->created_month] = $monthly_report->total_student;
-            }elseif($monthly_report->gender==='Female'){
-                $monthly_female[$monthly_report->created_month] = $monthly_report->total_student;
-            }
+
+        $data_months = Students::groupBy('created_month')->select(DB::raw('count(*) as total_applicant, extract(MONTH from created_at) as created_month'))->get();
+        $months = array(
+            'Jan.',
+            'Feb.',
+            'March',
+            'Apr.',
+            'May',
+            'June',
+            'July',
+            'Aug.',
+            'Sept.',
+            'Oct.',
+            'Nov.',
+            'Dec.',
+        );
+
+        $data_month_labels = array();
+        $data_month_values = array();
+        foreach($data_months as $data_month){
+            $data_month_labels[] = $months[$data_month->created_month-1];
+            $data_month_values[] = $data_month->total_applicant;
         }
+
         return view('pages.admin', [
             'total_student'=>$total_student,
             'totalNewStudent'=>$totalNewStudent,
@@ -104,9 +114,8 @@ class AuthUser extends Controller
             'values_gender'=>$values_gender,
             'values_age'=>$values_age,
             'labels_age'=>$labels_age_key,
-            'monthly_month'=>$monthly_month,
-            'monthly_male'=>$monthly_male,
-            'monthly_female'=>$monthly_female
+            'data_month_labels'=>$data_month_labels,
+            'data_month_values'=>$data_month_values
         ]);
     }
 
@@ -124,7 +133,23 @@ class AuthUser extends Controller
         return view('pages.staff')->with('success','Welcome Staff');
     }
     public function officer(){
-        return view('pages.officer')->with('success','Welcome Staff');
+        $total_student = Students::count();
+        $totalNewStudent = Students::whereBetween('updated_at', [Carbon::now()->subDay(7),'NOW()'])->count();
+        $total_pending = Students::where('status','=',false)->count();
+        $data_graphs = Students::groupBy('id_course')->select(DB::raw('id_course, count(*) as total_course'))->get();
+        $data_labels = array();
+        $data_values = array();
+        foreach($data_graphs as $data_graph){
+            $data_labels[] = $data_graph->program->name;
+            $data_values[] = $data_graph->total_course;
+        }
+        return view('pages.officer', [
+            'total_student'=>$total_student,
+            'totalNewStudent'=>$totalNewStudent,
+            'total_pending'=>$total_pending,
+            'data_labels'=>$data_labels,
+            'data_values'=>$data_values
+        ])->with('success','Welcome Officer');
     }
 
     public function signoutAction(Request $request){

@@ -16,6 +16,7 @@ class Students extends Model
         "mname",
         "lname",
         "sname",
+        "region",
         "street_number",
         "city",
         "district",

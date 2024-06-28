@@ -1,62 +1,70 @@
 $(document).ready(()=>{
-//   regions();
-//   pregions();
-//   birthplace_regions();
-//   $(".txt, #region, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var region = $('option:selected', this).attr('data-id');
-//         // province(region);
-//     });
-//   });
+  regions();
+  pregions();
+  birthplace_regions();
 
-//   $(".txt, #province, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var muni = $('option:selected', this).attr('data-id');
-//         // city(muni);
-//     });
-//   });
+let region = '';
+let muni = '';
+let city_ = '';
+let birthplace_region_ = ''
+let pmuni_ = ''
+let pregion_ = ''
+let pcity_com = ''
+  $(".txt, #region, .checkbox").each(function() {
+    $(this).change(function(){
+        region = $('option:selected', this).attr('data-id');
+        province(region);
+    });
+  });
 
-//   $(".txt, #muni, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var city = $('option:selected', this).attr('data-id');
-//         // district(city);
-//     });
-//   });
+  $(".txt, #province, .checkbox").each(function() {
+    $(this).change(function(){
+        muni = $('option:selected', this).attr('data-id');
+        city(region,muni);
+    });
+  });
 
-//   $(".txt, #pregion, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var region = $('option:selected', this).attr('data-id');
-//         // pprovince(region);
-//     });
-//   });
+  $(".txt, #muni, .checkbox").each(function() {
+    $(this).change(function(){
+        var city_ = $('option:selected', this).attr('data-id');
+        numberStreet(region,muni,city_)
+    });
+  });
 
-//   $(".txt, #pprovince, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var muni = $('option:selected', this).attr('data-id');
-//         // pcity(muni);
-//     });
-//   });
+  $(".txt, #pregion, .checkbox").each(function() {
+    $(this).change(function(){
+        pregion_ = $('option:selected', this).attr('data-id');
+        pprovince(pregion_);
+    });
+  });
 
-//   $(".txt, #pmuni, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var city = $('option:selected', this).attr('data-id');
-//         // pdistrict(city);
-//     });
-//   });
+  $(".txt, #pprovince, .checkbox").each(function() {
+    $(this).change(function(){
+        pmuni_ = $('option:selected', this).attr('data-id');
+        pcity(pregion_,pmuni_);
+    });
+  });
 
-//   $(".txt, #birthplace-region, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var region = $('option:selected', this).attr('data-id');
-//         // birthplace_province_select(region);
-//     });
-//   });
+  $(".txt, #pmuni, .checkbox").each(function() {
+    $(this).change(function(){
+        pcity_com = $('option:selected', this).attr('data-id');
+        pnumberStreet_com(pregion_, pmuni_, pcity_com)
+    });
+  });
 
-//   $(".txt, #birthplace-province, .checkbox").each(function() {
-//     $(this).change(function(){
-//         var muni = $('option:selected', this).attr('data-id');
-//         // birthplace_city(muni);
-//     });
-//   });
+  $(".txt, #birthplace-region, .checkbox").each(function() {
+    $(this).change(function(){
+        birthplace_region_ = $('option:selected', this).attr('data-id');
+        birthplace_province_select(birthplace_region_);
+    });
+  });
+
+  $(".txt, #birthplace-province, .checkbox").each(function() {
+    $(this).change(function(){
+        var muni = $('option:selected', this).attr('data-id');
+        birthplace_city(birthplace_region_,muni);
+    });
+  });
 
 //   iscroll();
 
@@ -65,222 +73,221 @@ $(document).ready(()=>{
 var regions_ = document.getElementById('region');
 var province_ = document.getElementById('province');
 var city_= document.getElementById('muni');
-var district_ = document.getElementById('dist')
+var district_ = document.getElementById('dist');
+var numberstreet_ = document.getElementById('number-street');
 
 var pregions_ = document.getElementById('pregion');
 var pprovince_ = document.getElementById('pprovince');
 var pcity_= document.getElementById('pmuni');
-var pdistrict_ = document.getElementById('pdist')
+var pnumberstreet_com_ = document.getElementById('pnumber-street');
+
 
 var birthplace_province = document.getElementById('birthplace-province');
 var birthplace_region = document.getElementById('birthplace-region');
 var birthplace_pmuni = document.getElementById('birthplace-pmuni');
 
-
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-};
 function regions(){
-  fetch("https:/psgc.gitlab.io/api/regions/", requestOptions)
-    .then(response => response.json())
-    .then(result =>
-      (
-        result.forEach(element => {
-          const option = document.createElement('option');
-          option.value = element.name;
-          option.dataset.id = element.code
-          option.textContent = element.regionName
-          regions_.appendChild(option);
-        })
-      )
+
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result =>
+            Object.keys(result).forEach(key=>{
+                option = document.createElement('option');
+                option.value = result[key].region_name;
+                option.dataset.id = key
+                option.textContent = result[key].region_name
+                regions_.appendChild(option);
+            })
+        )
+        .catch(error => console.log('error', error));
+}
+
+function province(regionCode){
+    province_.disabled = false;
+    city_.disabled = true;
+    let option_province = "<option value='' selected disabled>Select Province</option>";
+    let option_city = "<option value='' selected disabled>Select City/Municipality</option>";
+    province_.innerHTML = option_province;
+    city_.innerHTML = option_city;
+    province_.innerHTML = option_province;
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result =>
+            Object.keys(result[regionCode].province_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key
+                option.dataset.id = key
+                option.textContent = key
+                province_.appendChild(option);
+            })
+        )
+        .catch(error => console.log('error', error));
+}
+
+function city(region,province){
+    city_.disabled = false;
+    let option_city = "<option value='' selected disabled>Select City/Municipality</option>";
+    city_.innerHTML = option_city;
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result => (
+
+            Object.keys(result[region].province_list[province].municipality_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key;
+                option.dataset.id = key
+                option.textContent = key
+                city_.appendChild(option);
+            })
+
+        )
     )
     .catch(error => console.log('error', error));
+}
+
+function numberStreet(region,province,numberStreet){
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result => (
+            result[region].province_list[province].municipality_list[numberStreet].barangay_list.forEach(data=>{
+                const option = document.createElement('option');
+                option.value = data;
+                option.dataset.id = data
+                option.textContent = data
+                numberstreet_.appendChild(option);
+            })
+
+        )
+        )
+        .catch(error => console.log('error', error));
+
 }
 
 function birthplace_regions(){
-    fetch("https:/psgc.gitlab.io/api/regions/", requestOptions)
-      .then(response => response.json())
-      .then(result =>
-        (
-          result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.dataset.id = element.code
-            option.textContent = element.regionName
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+    .then(response => response.json())
+    .then(result =>
+        Object.keys(result).forEach(key=>{
+            option = document.createElement('option');
+            option.value = result[key].region_name;
+            option.dataset.id = key
+            option.textContent = result[key].region_name
             birthplace_region.appendChild(option);
-          })
-        )
-      )
-      .catch(error => console.log('error', error));
-  }
-  function pregions(){
-    fetch("https:/psgc.gitlab.io/api/regions/", requestOptions)
-      .then(response => response.json())
-      .then(result =>
-        (
-          result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.dataset.id = element.code
-            option.textContent = element.regionName
-            pregion.appendChild(option);
-          })
-        )
-      )
-      .catch(error => console.log('error', error));
-  }
-
-function province(regionCode){
-    let option_province = "<option value='' selected>Select Province</option>";
-    province_.innerHTML = option_province;
-    fetch(`https:/psgc.gitlab.io/api/regions/${regionCode}/provinces`, requestOptions)
-        .then(response => response.json())
-        .then(result =>
-        (
-            result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.dataset.id = element.code
-            option.textContent = element.name
-            province_.appendChild(option);
-
-            })
-        )
-        )
-        .catch(error => console.log('error', error));
-}
-
-function pprovince(regionCode){
-    let option_province = "<option value='' selected>Select Province</option>";
-    pprovince_.innerHTML = option_province;
-    fetch(`https:/psgc.gitlab.io/api/regions/${regionCode}/provinces`, requestOptions)
-        .then(response => response.json())
-        .then(result =>
-        (
-            result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.dataset.id = element.code
-            option.textContent = element.name
-            pprovince_.appendChild(option);
-
-            })
-        )
-        )
-        .catch(error => console.log('error', error));
+        })
+    )
+    .catch(error => console.log('error', error));
 }
 
 function birthplace_province_select(regionCode){
-  let option_province = "<option value='' selected>Select Province</option>";
-  birthplace_province.innerHTML = option_province;
-  fetch(`https:/psgc.gitlab.io/api/regions/${regionCode}/provinces`, requestOptions)
+    birthplace_province.disabled = false;
+    let option_city = "<option value='' selected disabled>Select City/Municipality</option>";
+    birthplace_pmuni.innerHTML = option_city;
+    birthplace_pmuni.disabled=true;
+
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result =>
+            Object.keys(result[regionCode].province_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key
+                option.dataset.id = key
+                option.textContent = key
+                birthplace_province.appendChild(option);
+            })
+        )
+        .catch(error => console.log('error', error));
+
+}
+
+function birthplace_city(region,province){
+    let option_city = "<option value='' selected disabled>Select City/Municipality</option>";
+    birthplace_pmuni.innerHTML = option_city;
+    birthplace_pmuni.disabled = false;
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result => (
+            Object.keys(result[region].province_list[province].municipality_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key;
+                option.dataset.id = key
+                option.textContent = key
+                birthplace_pmuni.appendChild(option);
+            })
+
+        )
+    )
+    .catch(error => console.log('error', error));
+}
+
+function pregions(){
+    pregion
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
     .then(response => response.json())
     .then(result =>
-      (
-        result.forEach(element => {
-          const option = document.createElement('option');
-          option.value = element.name;
-          option.dataset.id = element.code
-          option.textContent = element.name
-          birthplace_province.appendChild(option);
+        Object.keys(result).forEach(key=>{
+            option = document.createElement('option');
+            option.value = result[key].region_name;
+            option.dataset.id = key
+            option.textContent = result[key].region_name
+            pregion.appendChild(option);
         })
-      )
     )
     .catch(error => console.log('error', error));
 }
 
-function city(province){
-  let option_city = "<option value='' selected>Select City</option>";
-  city_.innerHTML = option_city;
-  fetch(`https:/psgc.gitlab.io/api/provinces/${province}/cities-municipalities/`, requestOptions)
-    .then(response => response.json())
-    .then(result => (
-        result.forEach(element => {
-          const option = document.createElement('option');
-          option.value = element.name;
-          option.dataset.id = element.code
-          option.textContent = element.name
-          city_.appendChild(option);
-        })
-      )
-    )
-    .catch(error => console.log('error', error));
-}
-
-function pcity(province){
-    let option_city = "<option value='' selected>Select City</option>";
+function pprovince(regionCode){
+    pprovince_.disabled = false;
+    let option_city = "<option value='' selected disabled>Select City/Municipality</option>";
     pcity_.innerHTML = option_city;
-    fetch(`https:/psgc.gitlab.io/api/provinces/${province}/cities-municipalities/`, requestOptions)
-      .then(response => response.json())
-      .then(result => (
-          result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.dataset.id = element.code
-            option.textContent = element.name
-            pcity_.appendChild(option);
-          })
+    pcity_.disabled = true;
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result =>
+            Object.keys(result[regionCode].province_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key
+                option.dataset.id = key
+                option.textContent = key
+                pprovince_.appendChild(option);
+            })
         )
-      )
-      .catch(error => console.log('error', error));
-  }
-
-function birthplace_city(province){
-    let option_city = "<option value='' selected>Select City</option>";
-    birthplace_pmuni.innerHTML = option_city;
-    fetch(`https:/psgc.gitlab.io/api/provinces/${province}/cities-municipalities/`, requestOptions)
-      .then(response => response.json())
-      .then(result => (
-          result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.textContent = element.name
-            option.dataset.id = element.code
-            birthplace_pmuni.appendChild(option);
-          })
-        )
-      )
-      .catch(error => console.log('error', error));
-  }
-
-
-function district(city){
-  let option_city = "<option value='' selected>Select Districts</option>";
-  district_.innerHTML = option_city;
-  fetch(`https:/psgc.gitlab.io/api/districts`, requestOptions)
-    .then(response => response.json())
-    .then(result => (
-        result.forEach(element => {
-          const option = document.createElement('option');
-          option.value = element.name;
-          option.textContent = element.name
-          option.dataset.id = element.code
-          district_.appendChild(option);
-        })
-      )
-    )
-    .catch(error => console.log('error', error));
+        .catch(error => console.log('error', error));
 }
 
-function pdistrict(city){
-    let option_city = "<option value='' selected>Select Districts</option>";
-    pdistrict_.innerHTML = option_city;
-    fetch(`https:/psgc.gitlab.io/api/districts`, requestOptions)
-      .then(response => response.json())
-      .then(result => (
-          result.forEach(element => {
-            const option = document.createElement('option');
-            option.value = element.name;
-            option.textContent = element.name
-            option.dataset.id = element.code
-            pdistrict_.appendChild(option);
-          })
+function pcity(region,province){
+    pcity_.disabled = false;
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result => (
+            Object.keys(result[region].province_list[province].municipality_list).forEach(key=>{
+                const option = document.createElement('option');
+                option.value = key;
+                option.dataset.id = key
+                option.textContent = key
+                pcity_.appendChild(option);
+            })
         )
-      )
-      .catch(error => console.log('error', error));
-  }
+    )
+    .catch(error => console.log('error', error));
 
+}
+
+function pnumberStreet_com(region,province,numberStreet){
+    fetch("js/philippine_provinces_cities_municipalities_and_barangays_2019v2.json")
+        .then(response => response.json())
+        .then(result => (
+            result[region].province_list[province].municipality_list[numberStreet].barangay_list.forEach(data=>{
+                const option = document.createElement('option');
+                option.value = data;
+                option.dataset.id = data
+                option.textContent = data
+                pnumberstreet_com_.appendChild(option);
+            })
+
+        )
+        )
+        .catch(error => console.log('error', error));
+}
 
 function iscroll(){
     const privacyPolicy = document.getElementById("privacyPolicy");

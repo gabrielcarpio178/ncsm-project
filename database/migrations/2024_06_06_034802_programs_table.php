@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('img_name');
+            $table->text('exam_link');
             $table->unsignedInteger('hours');
             $table->text('caption');
             $table->timestamps();

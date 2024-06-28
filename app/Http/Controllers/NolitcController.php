@@ -26,4 +26,7 @@ class NolitcController extends Controller
     public function know_more(){
         return view("about");
     }
+    public function thank_page(){
+        return view("thank_you");
+    }
 }

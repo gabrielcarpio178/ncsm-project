@@ -11,9 +11,11 @@ class Programs extends Model
     protected $table = 'programs';
     protected $fillable = [
         "name",
+        "exam_link",
         "img_name",
         "hours",
-        "caption"
+        "caption",
+        "assessment_fee"
     ];
 
     public function qualifications(){
