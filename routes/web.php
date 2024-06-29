@@ -35,7 +35,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/register-student', 'register_student')->name('register_admin');
         Route::post('/register-student', 'filter')->name('filter');
         Route::get('/students/{id}', 'filter_show')->name('students.show');
-        // Route::get('/register-student', 'studentInfo')->name('pages.adminRegisterStudent');
+        Route::put('/updateScoreCards/{id}', 'updateScoreCards')->name('updateScoreCards');
+        Route::get('/managePartners', 'managePartners')->name('managePartners');
     });
 });
 

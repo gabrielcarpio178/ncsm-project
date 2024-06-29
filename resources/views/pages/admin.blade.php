@@ -27,7 +27,7 @@
             <div class="rounded-md shadow-lg bg-slate-100 w-[30vw] h-[100%] flex flex-col p-3">
                 <h2 class="font-bold text-xl">Student by Course</h2>
                 <div class="graph w-[100%] h-[100%]">
-                    <canvas id="line"></canvas>
+                    <canvas id="bar"></canvas>
                 </div>
             </div>
             <div class="rounded-md shadow-lg bg-slate-100 w-[30vw] h-[100%] flex flex-col p-3">
@@ -45,7 +45,7 @@
             <div class="rounded-md shadow-lg bg-slate-100 w-[30vw] h-[100%] flex flex-col p-3">
                 <h2 class="font-bold text-xl">Applicants by Month</h2>
                 <div class="graph w-[100%] h-[90%] flex flex-row items-center justify-center">
-                    <canvas id="pie"></canvas>
+                    <canvas id="line"></canvas>
                 </div>
             </div>
         </div>
@@ -77,8 +77,8 @@
         }
     });
     //line
-    const line = document.getElementById('line').getContext('2d');
-    const chart_line = new Chart(line, {
+    const bar = document.getElementById('bar').getContext('2d');
+    const chart_bar = new Chart(bar, {
         type: 'bar',
         data: {
             labels: {!!json_encode($labels_course)!!},
@@ -110,8 +110,8 @@
     });
     //pie
 
-    const pie = document.getElementById('pie').getContext('2d');
-    const chart_pie = new Chart(pie, {
+    const line = document.getElementById('line').getContext('2d');
+    const chart_line = new Chart(line, {
         type: 'line',
         data: {
             labels: {!!json_encode($data_month_labels)!!},

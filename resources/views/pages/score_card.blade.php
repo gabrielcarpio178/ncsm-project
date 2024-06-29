@@ -1,148 +1,86 @@
 @include('partials.header', ['title'=> 'Score Cards'])
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
-<div class="container main-content">
-    <div class="container ms-5">
-        <div class="container ms-5 p-5">
-            <h1>Score Card</h1>
-            <table class="table ms-5">
-                <thead>
-                    <tr>
-                        <th scope="col">#ID</th>
-                        <th scope="col">Number of Graduates</th>
-                        <th scope="col">Number of Employed</th>
-                        <th scope="col">Employment Rates</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($scoreCard as $card)
-                    <tr>
-                        <th scope="row">{{ $card->id }}</th>
-                        <td>{{ number_format($card->number_of_graduates) }}</td>
-                        <td>{{ number_format($card->number_of_employed) }}</td>
-                        <td>{{ round($card->employment_rate) }}%</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                data-bs-card-id="{{ $card->id }}"
-                                data-bs-number-of-graduates="{{ $card->number_of_graduates }}"
-                                data-bs-number-of-employed="{{ $card->number_of_employed }}">
-                                Edit
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+<x-message></x-message>
+<section class="bg-green-100 w-[86.6%] absolute top-40 left-64 p-10">
+    <div class="text-2xl font-black text-[#168753]">
+        Score Cards
+    </div>
+    <div class="w-[100%] h-[30vh] px-5 py-5 flex flex-row gap-x-10 ">
+        <div class="bg-slate-100 flex flex-col items-center justify-center gap-2 w-[33.33%] h-[20vh] rounded-md shadow-md px-6 py-5">
+            <h2 class="text-3xl font-bold">Graduates</h2>
+            <div class="text-2xl font-bold">{{$scoreCard->number_of_graduates}}</div>
+        </div>
+        <div class="bg-slate-100 flex flex-col items-center justify-center gap-2 w-[33.33%] h-[20vh] rounded-md shadow-md px-6 py-5">
+            <h2 class="text-3xl font-bold">Employed</h2>
+            <div class="text-2xl font-bold">{{$scoreCard->number_of_employed}}</div>
+        </div>
+        <div class="bg-slate-100 flex flex-col items-center justify-center gap-2 w-[33.33%] h-[20vh] rounded-md shadow-md px-6 py-5">
+            <h2 class="text-3xl font-bold">Employment Rate</h2>
+            <div class="text-2xl font-bold">{{$scoreCard->employment_rate}}%</div>
         </div>
     </div>
-</div>
-
-<!-- Update Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Score Card</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('update', ['id' => $card->id ?? '']) }}" method="POST" id="updatescoreCardForm">
-                    @csrf
-                    <input type="hidden" id="user_id" name="user_id" value="">
-                    <div class="mb-3">
-                        <label for="number_of_graduates" class="form-label">Number of Graduates</label>
-                        <input type="number" class="form-control" id="number_of_graduates" name="number_of_graduates" placeholder="Enter # of graduates">
-                    </div>
-                    <div class="mb-3">
-                        <label for="number_of_employed" class="form-label">Number of Employed</label>
-                        <input type="number" class="form-control" id="number_of_employed" name="number_of_employed" placeholder="Enter # of employed">
-                    </div>
-                    <div class="mb-3">
-                        <label for="employment_rate" class="form-label">Employment Rate (%)</label>
-                        <input type="text" class="form-control" id="employment_rate" name="employment_rate" readonly>
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
+    <div class="w-[100%] flex flex-col items-center gap-2">
+        <div class="edit-form-content w-[40%] rounded-md shadow-md px-4 py-7 animate__animated animate__fadeInDown" style="display: none" id="form-edit">
+            <form action="{{ route('updateScoreCards', ['id' => $scoreCard->id]) }}" method="post" class="flex flex-col gap-2">
+                @method('PUT')
+                @csrf
+                <div class="w-[100%]">
+                    <label for="number_of_graduates">Graduates</label>
+                    <input type="number" name="number_of_graduates" id="number_of_graduates" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Graduates" value="{{!session()->has('error')?$scoreCard->number_of_graduates:old('number_of_graduates')}}" oninput="calRate()">
+                    <p class="text-red-500">
+                        @error('number_of_graduates')
+                            <p class="error">{{$message}}</p>
+                        @enderror
+                    </p>
+                </div>
+                <div class="w-[100%]">
+                    <label for="number_of_employed">Employed</label>
+                    <input type="number" name="number_of_employed" id="number_of_employed" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Graduates" value="{{!session()->has('error')?$scoreCard->number_of_employed:old('number_of_employed')}}" oninput="calRate()">
+                    <p class="text-red-500">
+                        @error('number_of_employed')
+                            <p class="error">{{$message}}</p>
+                        @enderror
+                    </p>
+                </div>
+                <div class="w-[100%]">
+                    <label for="employment_rate">Employment Rate</label>
+                    <input type="number" name="employment_rate" id="employment_rate" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Graduates" value="{{$scoreCard->employment_rate}}" readonly>
+                </div>
+                <div class="w-[100%]">
+                    <button class="w-[100%] bg-[#168753] rounded-md text-white hover:bg-green-900 py-2 px-3 h-[5%] font-black" type="submit">Submit</button>
+                </div>
+            </form>
         </div>
+        <button class="w-[10%] bg-[#168753] rounded-md text-white hover:bg-green-900 py-2 px-3 h-[5%] font-black" onclick="show()" id="showForm">Edit</button>
+        <button class="w-[10%] bg-red-500 rounded-md text-white hover:bg-red-900 py-2 px-3 h-[5%] font-black" onclick="hide()" id="hideForm" style="display: none">Hide</button>
     </div>
-</div>
-
-<div class="container main-content mt-5">
-    <div class="container-inside ms-5 justify-content-center">
-        <h1 class="text-center mb-4">Score Card</h1>
-        <div class="container m-5">
-            <div class="row justify-content-center p-3 ms-3">
-                @foreach($scoreCard as $card)
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ number_format($card->number_of_graduates) }}</h5>
-                            <p class="card-text text-center">Number of Graduates</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ number_format($card->number_of_employed) }}</h5>
-                            <p class="card-text text-center">Number of Employed</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ round($card->employment_rate) }}%</h5>
-                            <p class="card-text text-center">Employment Rate</p>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-
+</section>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Event listener for modal show
-        var updateModal = document.getElementById('updateModal');
-        updateModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var cardId = button.getAttribute('data-bs-card-id');
-            var numberOfGraduates = button.getAttribute('data-bs-number-of-graduates');
-            var numberOfEmployed = button.getAttribute('data-bs-number-of-employed');
 
-            document.getElementById('user_id').value = cardId;
-            document.getElementById('number_of_graduates').value = numberOfGraduates;
-            document.getElementById('number_of_employed').value = numberOfEmployed;
-
-            // Calculate employment rate
-            var employmentRate = (numberOfEmployed / numberOfGraduates) * 100;
+    function calRate() {
+        let num_grand = parseInt(document.getElementById("number_of_graduates").value);
+        let num_emp = parseInt(document.getElementById("number_of_employed").value);
+        if (num_grand > 0) {
+            var employmentRate = (num_emp / num_grand) * 100;
             document.getElementById('employment_rate').value = employmentRate.toFixed(2);
-        });
-
-        // Event listener for input changes to recalculate employment rate
-        document.getElementById('number_of_graduates').addEventListener('input', calculateEmploymentRate);
-        document.getElementById('number_of_employed').addEventListener('input', calculateEmploymentRate);
-
-        function calculateEmploymentRate() {
-            var graduates = document.getElementById('number_of_graduates').value;
-            var employed = document.getElementById('number_of_employed').value;
-            if (graduates > 0) {
-                var employmentRate = (employed / graduates) * 100;
-                document.getElementById('employment_rate').value = employmentRate.toFixed(2);
-            } else {
-                document.getElementById('employment_rate').value = '';
-            }
+        } else {
+            document.getElementById('employment_rate').value = '';
         }
-    });
+
+    }
+
+    function show() {
+        document.getElementById("form-edit").style.display = "block";
+        document.getElementById("showForm").style.display = "none";
+        document.getElementById("hideForm").style.display = "block";
+    }
+    function hide() {
+        document.getElementById("form-edit").style.display = "none";
+        document.getElementById("showForm").style.display = "block";
+        document.getElementById("hideForm").style.display = "none";
+    }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 @include('partials.footer')

@@ -7,7 +7,7 @@
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center md:m-0 lg:mt-10">
             Account Settings
         </h1>
-        <form class="space-y-4 md:space-y-6" action="{{route('update', ['id'=>1])}}" method="POST">
+        <form class="space-y-4 md:space-y-6" action="{{route('update', ['id'=>auth()->user()->id])}}" method="POST">
             @csrf
             @method('PUT')
             @if (session()->has('invalid'))

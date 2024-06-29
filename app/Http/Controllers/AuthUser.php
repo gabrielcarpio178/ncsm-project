@@ -81,7 +81,7 @@ class AuthUser extends Controller
         $labels_age_key = array_keys($values_age_array);
 
 
-        $data_months = Students::groupBy('created_month')->select(DB::raw('count(*) as total_applicant, extract(MONTH from created_at) as created_month'))->get();
+        $data_months = Students::groupBy('created_month')->select(DB::raw('count(*) as total_applicant, extract(MONTH from created_at) as created_month'))->orderBy("created_month",'ASC')->get();
         $months = array(
             'Jan.',
             'Feb.',
@@ -130,9 +130,7 @@ class AuthUser extends Controller
     }
 
     public function staff(){
-        return view('pages.staff')->with('success','Welcome Staff');
-    }
-    public function officer(){
+
         $total_student = Students::count();
         $totalNewStudent = Students::whereBetween('updated_at', [Carbon::now()->subDay(7),'NOW()'])->count();
         $total_pending = Students::where('status','=',false)->count();
@@ -150,6 +148,10 @@ class AuthUser extends Controller
             'data_labels'=>$data_labels,
             'data_values'=>$data_values
         ])->with('success','Welcome Officer');
+
+    }
+    public function officer(){
+       return view('pages.staff')->with('success','Welcome Officer');
     }
 
     public function signoutAction(Request $request){

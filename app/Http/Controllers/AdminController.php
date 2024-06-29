@@ -316,8 +316,27 @@ class AdminController extends Controller
     public function showScoreCard()
     {
 
-        $scoreCard = ScoreCard::all(); // Fetch all score cards
+        $scoreCard = ScoreCard::first(); // Fetch all score cards
         return view('pages.score_card', ['scoreCard' => $scoreCard]); // Pass the score cards to the view
+    }
+
+    public function updateScoreCards(Request $request, $id){
+        $data = $request->validate([
+            'number_of_graduates'=> 'required|numeric',
+            'number_of_employed'=> 'required|numeric',
+            'employment_rate'=> 'required|numeric'
+        ]);
+        $scoreCards = ScoreCard::find($id);
+        $scoreCards->number_of_graduates = $data['number_of_graduates'];
+        $scoreCards->number_of_employed = $data['number_of_employed'];
+        $scoreCards->employment_rate = $data['employment_rate'];
+        $scoreCards->save();
+        return redirect()->back()->with('success','Update success');
+    }
+
+
+    public function managePartners(){
+        return view('pages.adminManagePartner');
     }
 
 

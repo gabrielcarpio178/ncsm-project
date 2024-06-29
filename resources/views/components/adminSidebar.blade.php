@@ -39,8 +39,8 @@
 
     <ul class="flex flex-col gap-y-8">
         {{-- headerColor #fff--}}
-        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{$user==='admin'?route('admin'):route('officer')}}">Dashboard</a></li>
-        @if ($user==='officer'||$user==='admin')
+        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{$user==='admin'?route('admin'):route('staff')}}">Dashboard</a></li>
+        @if ($user==='staff'||$user==='admin')
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded">
                 <a href="{{route('register_admin')}}" class="flex justify-between w-full">
                     <div>
@@ -52,16 +52,14 @@
                 </a>
             </li>
         @endif
-        @if ($user==='admin')
+        @if ($user==='admin'||$user==='officer')
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('upload-welcome')}}">Update Welcome</a></li>
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('program_management')}}">Program Managemant</a></li>
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="#">Manage NOLITC Update</a></li>
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('showScoreCard')}}">Update Score Cards</a></li>
-            <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="#">Manage Partners</a></li>
+            <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('managePartners')}}">Manage Partners</a></li>
         @endif
-        @if ($user==='officer'||$user==='admin')
-            <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('settings')}}">Account Settings</a></li>
-        @endif
+        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{route('settings')}}">Account Settings</a></li>
         <li class="px-10 text-md text-[#fff] text-lg hover:bg-slate-600 py-1 rounded">
             <form action="{{route('signoutAction')}}" method="POST">
                 @method("POST")
