@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/students/{id}', 'filter_show')->name('students.show');
         Route::put('/updateScoreCards/{id}', 'updateScoreCards')->name('updateScoreCards');
         Route::get('/managePartners', 'managePartners')->name('managePartners');
+        Route::post('/add_partners', 'add_partners')->name('add_partners');
     });
 });
 

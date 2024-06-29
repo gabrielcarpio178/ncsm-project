@@ -21,27 +21,67 @@
                     <th scope="col" class="px-6 py-3 capitalize" colspan="2">Action</th>
                 </thead>
                 <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($partners as $partner)
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><button class="w-[80%] bg-[#168753] rounded-md text-white hover:bg-green-900 px-3 py-2">Delete</button></td>
-                        <td><button class="w-[80%] bg-red-500 rounded-md text-white hover:bg-red-900 px-3 py-2">Update</button></td>
+                        <td>{{$i++}}</td>
+                        <td>
+                            <img src="{{URL::asset('assets/partners_logo/1719650160.png')}}" alt="partners logo">
+                        </td>
+                        <td>{{$partner->link}}</td>
+                        <td>{{$partner->created_at}}</td>
+                        <td><button class="w-[80%] bg-red-500 rounded-md text-white hover:bg-red-900 px-3 py-2">Delete</button></td>
+                        <td><button class="w-[80%] bg-[#168753] rounded-md text-white hover:bg-green-900 px-3 py-2">Update</button></td>
                     </tr>
+                    @endforeach
+
                 </tbody>
             </table>
             <div class="w-full mt-10">
-                {{-- {{ $students->links('vendor.pagination.tailwind') }} --}}
+                {{ $partners->links('vendor.pagination.tailwind') }}
             </div>
-            <div  class="w-[100%] flex flex-col items-center ">
-                <form action="" method="post" class="w-[50%] flex flex-col items-center rounded-md shadow-md py-5 bg-slate-100">
-                    <div class="w-[50%] h-[25vh] border border-slate-800 flex flex-row items-center justify-center ">
-                        <h3 class="font-bold">Attach Image</h3>
+            <div  class="w-[100%] flex flex-col items-center">
+                <form action="{{route('add_partners')}}" method="post" class="w-[50%] flex flex-col items-center rounded-md shadow-md py-5 bg-slate-100 px-10 gap-5" enctype="multipart/form-data">
+                    @csrf
+                    <h3 class="font-bold text-2xl">Add Partners</h3>
+                    <input type="file" id="image" class="hidden" name="image">
+                    <div class="w-[30%] h-[20vh] border border-slate-800 flex flex-row items-center justify-center rounded-md cursor-pointer"  onclick="insertImage()">
+                        <h3 class="font-bold" id="attach_file">Attach Image</h3>
+                        <img src="" id="img-file" class="hidden">
                     </div>
+                    @error('image')
+                        <p class="text-red-500">{{$message}}</p>
+                    @enderror
+                    <input type="text" name="link" id="link" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Link" value="">
+                    @error('link')
+                        <p class="text-red-500">{{$message}}</p>
+                    @enderror
+                    <button class="w-[100%] bg-[#168753] rounded-md text-white hover:bg-green-900 px-3 py-2" type="submit">Add</button>
                 </form>
             </div>
         </div>
     </section>
 </main>
+<script>
+    function insertImage(){
+        document.getElementById('image').click();
+    }
+    const photoInp = $("#image");
+        photoInp.change(function (e) {
+            if(document.getElementById("image").files.length !== 0 ){
+                file = this.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $("#img-file").attr("src", event.target.result);
+                        document.getElementById('attach_file').style.display = 'none';
+                        document.getElementById('img-file').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+</script>
 @include('partials.footer')

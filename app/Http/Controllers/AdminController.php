@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Exports\StudentsExport;
 use App\Exports\FilterExport;
+use App\Models\Partners;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -336,9 +337,28 @@ class AdminController extends Controller
 
 
     public function managePartners(){
-        return view('pages.adminManagePartner');
+        $partners = Partners::orderBy('id', 'ASC')->paginate(10);
+
+        return view('pages.adminManagePartner', ['partners'=>$partners]);
+
     }
 
+    public function add_partners(Request $request){
+        $data = $request->validate([
+            'image'=> 'mimes:jpeg,png,bmp,tiff |max:4094',
+            'link'=> 'required'
+        ]);
+
+        $database = time().'.'.$data['image']->extension() ;
+        $filename = $request->getSchemeAndHttpHost(). 'assets/partners_logo/img/'.$database;
+        $data['image']->move(public_path('assets/partners_logo/img/'), $filename);
+        Partners::create([
+            'logo'=>$database,
+            'link'=>$data['link']
+        ]);
+
+        return redirect()->back()->with('success','Add success');
+    }
 
 
 }
