@@ -10,6 +10,7 @@ class Programs extends Model
     use HasFactory;
     protected $table = 'programs';
     protected $fillable = [
+        "id",
         "name",
         "exam_link",
         "img_name",

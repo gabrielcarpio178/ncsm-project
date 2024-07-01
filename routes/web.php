@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/updateScoreCards/{id}', 'updateScoreCards')->name('updateScoreCards');
         Route::get('/managePartners', 'managePartners')->name('managePartners');
         Route::post('/add_partners', 'add_partners')->name('add_partners');
+        Route::delete('/delete_partners', 'delete_partners')->name('delete_partners');
     });
 });
 

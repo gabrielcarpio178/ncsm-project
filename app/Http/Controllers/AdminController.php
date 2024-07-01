@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Exports\StudentsExport;
 use App\Exports\FilterExport;
 use App\Models\Partners;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -118,9 +119,11 @@ class AdminController extends Controller
     }
 
     public function acceptApplicant(Request $request){
+        $user_id = $request->student_id;
+        $student = Students::find($user_id);
         $data = array(
             'message'=> '
-            We are pleased to inform you that you have been accepted at Negros Occidental Language and Information Technology Center (NOLITC). We are excited to welcome you to our community.'."
+            We are pleased to inform you that your registration form has been approved, and you are now eligible to take the examination via the provided link '.$student->program->exam_link.' . The outcome of this examination will play a significant role in determining your acceptance into Negros Occidental Language and Information Technology Center (NOLITC).'."
             \n".
             'We look forward to your participation in the course and are confident that you will find it both challenging and rewarding.'."
             \n".
@@ -129,8 +132,6 @@ class AdminController extends Controller
             'telephone' => "(034) 435 6092",
             'email'=> "nolitc@gmail.com"
         );
-        $user_id = $request->student_id;
-        $student = Students::find($user_id);
         Mail::to($student->email)->send(new Sendemail($data));
         $student['status'] = true;
         $student->save();
@@ -207,7 +208,11 @@ class AdminController extends Controller
         $filename = $request->getSchemeAndHttpHost(). '/assets/img/'.$database;
         $data['image']->move(public_path('/assets/img/'), $filename);
 
+
+        $lastest_id = DB::table('programs')->latest('created_at')->first();
+
        Programs::create([
+        'id'=>$lastest_id->id+1,
         'name'=> $data['course_name'],
         'exam_link'=> $data['exampleLink'],
         'hours'=> $data['hours'],
@@ -316,7 +321,6 @@ class AdminController extends Controller
 
     public function showScoreCard()
     {
-
         $scoreCard = ScoreCard::first(); // Fetch all score cards
         return view('pages.score_card', ['scoreCard' => $scoreCard]); // Pass the score cards to the view
     }
@@ -338,9 +342,7 @@ class AdminController extends Controller
 
     public function managePartners(){
         $partners = Partners::orderBy('id', 'ASC')->paginate(10);
-
         return view('pages.adminManagePartner', ['partners'=>$partners]);
-
     }
 
     public function add_partners(Request $request){
@@ -350,8 +352,8 @@ class AdminController extends Controller
         ]);
 
         $database = time().'.'.$data['image']->extension() ;
-        $filename = $request->getSchemeAndHttpHost(). 'assets/partners_logo/img/'.$database;
-        $data['image']->move(public_path('assets/partners_logo/img/'), $filename);
+        $filename = $request->getSchemeAndHttpHost(). 'assets/partners_logo/'.$database;
+        $data['image']->move(public_path('assets/partners_logo/'), $filename);
         Partners::create([
             'logo'=>$database,
             'link'=>$data['link']
@@ -359,6 +361,12 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success','Add success');
     }
+
+    public function delete_partners(Request $request){
+        DB::table('partners')->where('id', '=', $request->partners_id)->delete();
+        return redirect()->back()->with('success','Delete success');
+    }
+
 
 
 }

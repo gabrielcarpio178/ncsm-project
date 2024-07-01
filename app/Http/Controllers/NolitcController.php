@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
+use App\Models\Partners;
 use App\Models\Programs;
+use App\Models\ScoreCard;
 use Illuminate\Http\Request;
 
 class NolitcController extends Controller
@@ -13,7 +16,12 @@ class NolitcController extends Controller
         return view("students.register", ["programs"=>$programs]);
     }
     public function welcome(){
-        return view("welcome");
+        $data_welcome = Images::first();
+        $score_card = ScoreCard::first();
+        return view("welcome", [
+            'datas'=>$data_welcome,
+            'scoreCard'=>$score_card
+        ]);
     }
     public function tesda_qual(){
         $data_content = Programs::all();

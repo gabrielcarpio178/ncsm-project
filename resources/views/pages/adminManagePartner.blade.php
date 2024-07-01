@@ -27,13 +27,23 @@
                     @foreach ($partners as $partner)
                     <tr>
                         <td>{{$i++}}</td>
-                        <td>
-                            <img src="{{URL::asset('assets/partners_logo/1719650160.png')}}" alt="partners logo">
+                        <td class="flex justify-center items-center">
+                            <img src="{{'./assets/partners_logo/'.$partner->logo}}" alt="partners logo" width="90"
+                            height="100">
                         </td>
                         <td>{{$partner->link}}</td>
-                        <td>{{$partner->created_at}}</td>
-                        <td><button class="w-[80%] bg-red-500 rounded-md text-white hover:bg-red-900 px-3 py-2">Delete</button></td>
-                        <td><button class="w-[80%] bg-[#168753] rounded-md text-white hover:bg-green-900 px-3 py-2">Update</button></td>
+                        <td>{{\Carbon\Carbon::parse($partner->created_at)->format('M-d-Y')}}</td>
+                        <td>
+                            <form action="{{route('delete_partners')}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="number" value="{{$partner->id}}" class="hidden" name="partners_id">
+                                <button class="w-[80%] bg-red-500 rounded-md text-white hover:bg-red-900 px-3 py-2" type="submit">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <button class="w-[80%] bg-[#168753] rounded-md text-white hover:bg-green-900 px-3 py-2">Update</button>
+                        </td>
                     </tr>
                     @endforeach
 

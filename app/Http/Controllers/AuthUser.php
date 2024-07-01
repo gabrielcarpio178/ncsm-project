@@ -20,6 +20,7 @@ class AuthUser extends Controller
             "username"=> ["required"],
             "password"=> ["required"]
         ]);
+        //echo bcrypt($data['password']);
         $user = User_info::where("username", $data["username"])->first();
         if(auth()->attempt($data)||Hash::check($data["password"], $user->password)){
             $request->session()->regenerate();
@@ -151,7 +152,8 @@ class AuthUser extends Controller
 
     }
     public function officer(){
-       return view('pages.staff')->with('success','Welcome Officer');
+
+        return redirect('/upload-welcome/')->with('success','Welcome Officer');
     }
 
     public function signoutAction(Request $request){

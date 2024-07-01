@@ -25,8 +25,7 @@
     </header>
 
     <section id="home" class="intro">
-            <img src="image-website/Untitled design (6).png" alt="Group of Students" class="student">
-
+            <img src="{{'./assets/img/'.$datas->image}}" alt="Group of Students" class="student">
         <h1>Upskill Your Way to Success at NOLITC</h1>
         <p>Unlock your potential and pave the way to success with NOLITC's upskilling programs!</p>
         <a href="/register"><button>Register Now!</button></a>
@@ -109,15 +108,15 @@
         <h1>Our score card</h1>
         <div class="scorecard-metrics">
             <div class="metric">
-                <h3>7,395</h3>
+                <h3>{{$scoreCard->number_of_graduates}}</h3>
                 <p>Graduates</p>
             </div>
             <div class="metric">
-                <h3>6,154</h3>
+                <h3>{{$scoreCard->number_of_employed}}</h3>
                 <p>Employed</p>
             </div>
             <div class="metric">
-                <h3>83%</h3>
+                <h3>{{$scoreCard->employment_rate}}%</h3>
                 <p>Employment Rate</p>
             </div>
         </div>
@@ -180,7 +179,7 @@
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
-              </div>
+            </div>
 
         </div>
     </section>

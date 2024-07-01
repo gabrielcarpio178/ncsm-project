@@ -18,9 +18,6 @@
     </div>
   </div>
 
-  <a href="/register" class="w-full flex justify-center">
-    <button class="w-[10%] bg-[#168753] rounded-md text-white hover:bg-green-900 py-2 px-3 h-[5%] font-black">Register</button>
-  </a>
 
     <form action="{{route('upload_cover')}}" class="hidden" method="post" enctype="multipart/form-data">
         @csrf

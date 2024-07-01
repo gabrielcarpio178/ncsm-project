@@ -1,4 +1,4 @@
-@include('partials.header', ['title'=> 'Officer'])
+@include('partials.header', ['title'=> 'Staff'])
 <x-adminHeader></x-adminHeader>
 <x-adminSidebar :user='auth()->user()->usertype'></x-adminSidebar>
 

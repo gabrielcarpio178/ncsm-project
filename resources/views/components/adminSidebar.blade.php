@@ -39,7 +39,11 @@
 
     <ul class="flex flex-col gap-y-8">
         {{-- headerColor #fff--}}
-        <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded"><a href="{{$user==='admin'?route('admin'):route('staff')}}">Dashboard</a></li>
+        @if ($user!=='officer')
+            <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded">
+                <a href="{{$user==='admin'?route('admin'):route('staff')}}">Dashboard</a>
+            </li>
+        @endif
         @if ($user==='staff'||$user==='admin')
             <li class="px-10 text-md text-[#fff] text-md hover:bg-slate-600 py-1 rounded">
                 <a href="{{route('register_admin')}}" class="flex justify-between w-full">
