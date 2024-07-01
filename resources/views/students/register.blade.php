@@ -26,17 +26,17 @@
         </div>
         <nav id="navigition" class="navi">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#programs">Programs</a></li>
-                <li><a href="#updates">Updates</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#programs">Programs</a></li>
+                <li><a href="/#updates">Updates</a></li>
+                <li><a href="/#about">About Us</a></li>
+                <li><a href="/#contact">Contact Us</a></li>
             </ul>
         </nav>
     </div>
   </header>
   <div class="header-title">
-    <a href="#" class="back-icon">
+    <a href="{{route('welcome')}}" class="back-icon">
       <img src="image-website/Polygon 1.png" alt="back logo">
     </a>
     <h1>REGISTRATION FORM</h1>

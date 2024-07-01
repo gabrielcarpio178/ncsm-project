@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +55,7 @@
             <label for="qualification" class="label-input-tag">Qualification *</label>
             <select name="course" id="qualification" class="qualification-select" style="width: 25%" disabled>
                 @foreach ($programs as $program)
-                    <option value="{{$program->id}}"  {{$data['course']===$program->id?'selected':''}}>{{$program->name}}</option>
+                    <option value="{{$program->id}}"  {{(int)$data['course']===$program->id?'selected':''}}>{{$program->name}}</option>
                 @endforeach
                 {{-- <option value="" selected>Qualification</option>
                 <option value="Visual Graphic Design NCIII"  {{$data['course']==='Visual Graphic Design NCIII'?'selected':''}}>Visual Graphic Design NCIII</option>
